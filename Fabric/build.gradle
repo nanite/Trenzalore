@@ -87,7 +87,7 @@ if (ENV.CURSE_TOKEN) {
     curseforge {
         apiKey = ENV.CURSE_TOKEN
         project {
-            id = project.curseforge_id
+            id = project.curse_id
             releaseType = "beta"
             addGameVersion "Fabric"
             addGameVersion "${minecraft_version}"
