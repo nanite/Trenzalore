@@ -27,7 +27,7 @@
       ]
     },
     "mixins": [
-       "trenzalore-common.mixins.json"
+       "trenzalore.mixins.json"
     ],
   
     "depends": {

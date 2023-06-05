@@ -4,6 +4,7 @@
   "package": "com.unrealdinnerbone.trenzalore.content.mixin",
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.unrealdinnerbone.trenzalore.content.mixin.TrenzaloreMixinConfig",
+  "refmap": "trenzalore.refmap.json",
   "mixins": [
     "BoatMixin",
     "PiglinBruteAIMixin"
