@@ -15,7 +15,7 @@
     },
   
     "license": "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks",
-    "icon": "assets/modid/icon.png",
+    "icon": "assets/trenzalore/icon.png",
   
     "environment": "*",
     "entrypoints": {
