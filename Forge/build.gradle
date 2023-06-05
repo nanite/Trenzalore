@@ -3,6 +3,8 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+
 }
 
 minecraft {
@@ -92,3 +94,21 @@ publishing {
         }
     }
 }
+
+
+if (ENV.CURSE_TOKEN) {
+    curseforge {
+        apiKey = ENV.CURSE_TOKEN
+        project {
+            id = project.curseforge_id
+            releaseType = "beta"
+            addGameVersion "Forge"
+            addGameVersion "${minecraft_version}"
+            mainArtifact(jar)
+            changelog = file("../CHANGELOG.md")
+            changelogType = 'markdown'
+        }
+    }
+}
+
+rootProject.tasks.curseforgePublish.dependsOn tasks.curseforge
