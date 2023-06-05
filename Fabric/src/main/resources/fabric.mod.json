@@ -4,16 +4,17 @@
     "version": "${version}",
   
     "name": "Trenzalore",
-    "description": "This is an example description! Tell everyone what your mod is about!",
+    "description": "This mod adds a few small helpers to provide compatibility with Forge / Fabric.",
     "authors": [
-      "Me!"
+      "UnRealDinnerbone"
     ],
     "contact": {
-      "homepage": "https://fabricmc.net/",
-      "sources": "https://github.com/FabricMC/fabric-example-mod"
+      "homepage": "https://legacy.curseforge.com/minecraft/mc-mods/trenzalore",
+      "sources": "https://github.com/nanite/Trenzalore",
+      "issues": "https://github.com/nanite/Trenzalore"
     },
   
-    "license": "CC0-1.0",
+    "license": "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks",
     "icon": "assets/modid/icon.png",
   
     "environment": "*",
