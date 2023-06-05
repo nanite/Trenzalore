@@ -1,9 +1,9 @@
 {
     "schemaVersion": 1,
-    "id": "modid",
+    "id": "trenzalore",
     "version": "${version}",
   
-    "name": "Example Mod",
+    "name": "Trenzalore",
     "description": "This is an example description! Tell everyone what your mod is about!",
     "authors": [
       "Me!"
@@ -18,12 +18,15 @@
   
     "environment": "*",
     "entrypoints": {
+      "fabric-datagen": [
+        "com.unrealdinnerbone.trenzalore.data.TrenzaloreData"
+      ],
       "main": [
-        "com.example.examplemod.ExampleMod"
+        "com.unrealdinnerbone.trenzalore.TrenzaloreFabric"
       ]
     },
     "mixins": [
-      "modid.mixins.json"
+       "trenzalore-common.mixins.json"
     ],
   
     "depends": {
@@ -31,9 +34,6 @@
       "fabric": "*",
       "minecraft": "1.19.3",
       "java": ">=17"
-    },
-    "suggests": {
-      "another-mod": "*"
     }
   }
   

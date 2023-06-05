@@ -1,11 +1,8 @@
 subprojects {
-    
     apply plugin: 'java'
-    
+
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-    java.withSourcesJar()
-    java.withJavadocJar()
-        
+
     jar {
         from(rootProject.file("LICENSE")) {
             rename { "${it}_${mod_name}" }
@@ -26,38 +23,36 @@ subprojects {
         }
     }
 
-    sourcesJar {
-        from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_name}" }
-        }
-    }
+    def env = System.getenv();
+    def isSnapshot = env.SNAPSHOT == "true"
+    ext.ENV = env
+    ext.SNAPSHOT = isSnapshot
+
+    archivesBaseName = rootProject.mod_name
+    version = "${rootProject.mod_version}${isSnapshot ? '-SNAPSHOT' : ''}${!isSnapshot ? "-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}": ""}+mc${rootProject.minecraft_version}"
+    group = rootProject.maven_group
+
 
     repositories {
-
         mavenCentral()
-
         maven {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
-
-        maven {
-            name = 'BlameJared Maven (CrT / Bookshelf)'
-            url = 'https://maven.blamejared.com'
-        }
     }
 
-    tasks.withType(JavaCompile).configureEach {
-    
-        it.options.encoding = 'UTF-8'
-        it.options.release = 17
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
     }
 
-    // Disables Gradle's custom module metadata from being published to maven. The
-    // metadata includes mapped dependencies which are not reasonably consumable by
-    // other mod developers.
-    tasks.withType(GenerateModuleMetadata) {
+    java {
+        withSourcesJar()
+    }
+}
 
-        enabled = false
+task curseforgePublish {
+    doLast {
+        println "Hello from ${project.name}!"
     }
 }
