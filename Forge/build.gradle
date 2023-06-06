@@ -8,8 +8,10 @@ plugins {
 
 }
 
+Project commonProject = parent == rootProject ? parent.project("Common") : parent.project("Trenzalore-Common")
+
 mixin {
-    add project(":Common").sourceSets.main, "${mod_id}.refmap.json"
+    add commonProject.sourceSets.main, "${mod_id}.refmap.json"
     config("${mod_id}.mixins.json")
 }
 
@@ -17,30 +19,32 @@ minecraft {
     mappings channel: 'official', version: minecraft_version
 
     runs {
-        client {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'ForgeClient'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                modClientRun {
-                    source sourceSets.main
-                    source project(":Common").sourceSets.main
+        if(parent == rootProject) {
+            client {
+                workingDirectory project.file('run')
+                ideaModule "${rootProject.name}.${project.name}.main"
+                taskName 'ForgeClient'
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+                mods {
+                    modClientRun {
+                        source sourceSets.main
+                        source commonProject.sourceSets.main
+                    }
                 }
             }
-        }
 
-        server {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'ForgeServer'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                modServerRun {
-                    source sourceSets.main
-                    source project(":Common").sourceSets.main
+            server {
+                workingDirectory project.file('run')
+                ideaModule "${rootProject.name}.${project.name}.main"
+                taskName 'ForgeServer'
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+                mods {
+                    modServerRun {
+                        source sourceSets.main
+                        source commonProject.sourceSets.main
+                    }
                 }
             }
         }
@@ -54,7 +58,7 @@ minecraft {
             mods {
                 modDataRun {
                     source sourceSets.main
-                    source project(":Common").sourceSets.main
+                    source commonProject.sourceSets.main
                 }
             }
         }
@@ -66,15 +70,15 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
-    compileOnly project(":Common")
+    compileOnly commonProject
 }
 
 tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+    source(commonProject.sourceSets.main.allSource)
 }
 
 processResources {
-    from project(":Common").sourceSets.main.resources
+    from commonProject.sourceSets.main.resources
 }
 
 
@@ -118,4 +122,4 @@ if (ENV.CURSE_TOKEN) {
     }
 }
 
-rootProject.tasks.curseforgePublish.dependsOn tasks.curseforge
+parent.tasks.curseforgePublish.dependsOn tasks.curseforge

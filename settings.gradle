@@ -16,5 +16,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Trenzalore'
 include("Common", "Fabric", "Forge")

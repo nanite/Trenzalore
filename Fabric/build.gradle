@@ -5,13 +5,19 @@ plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
+for (final def s in parent.subprojects) {
+    println("Sub Project: :D " + s.name)
+}
+
+Project commonProject = parent == rootProject ? parent.project("Common") : parent.project("Trenzalore-Common")
+
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    implementation project(":Common")
+    implementation commonProject
 }
 
 loom {
@@ -21,26 +27,26 @@ loom {
     runs {
         client {
             client()
-            setConfigName("Fabric Client")
-            ideConfigGenerated(true)
+            setConfigName("Trenzalore Fabric Client")
+            ideConfigGenerated(parent == rootProject)
             vmArg("-Dmixin.debug.export=true")
-            runDir("run")
+            runDir("run_client")
         }
         server {
             server()
-            setConfigName("Fabric Server")
-            ideConfigGenerated(true)
+            setConfigName("Trenzalore Fabric Server")
+            ideConfigGenerated(parent == rootProject)
             vmArg("-Dmixin.debug.export=true")
-            runDir("run")
+            runDir("run_server")
         }
         data {
             inherit client
-            setConfigName("Fabric Data")
+            setConfigName("Trenzalore Fabric Data")
             ideConfigGenerated(true)
 
 
             vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${project(":Common").file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/main/generated")}")
             vmArg("-Dfabric-api.datagen.modid=${mod_id}")
 
             runDir "build/datagen"
@@ -51,7 +57,7 @@ loom {
 
 
 processResources {
-    from project(":Common").sourceSets.main.resources
+    from commonProject.sourceSets.main.resources
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
@@ -60,7 +66,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+    source(commonProject.sourceSets.main.allSource)
 }
 
 publishing {
@@ -101,4 +107,4 @@ if (ENV.CURSE_TOKEN) {
     }
 }
 
-rootProject.tasks.curseforgePublish.dependsOn tasks.curseforge
+parent.tasks.curseforgePublish.dependsOn tasks.curseforge
