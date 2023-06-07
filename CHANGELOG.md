@@ -1,3 +1,7 @@
+### 1.0.4
+
+- Remove Build Number from Version
+
 ### 1.0.3
 
 - Add ConfigManger

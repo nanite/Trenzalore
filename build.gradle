@@ -29,7 +29,7 @@ subprojects {
     ext.SNAPSHOT = isSnapshot
 
     archivesBaseName = project.mod_name
-    version = "${project.mod_version}${!isSnapshot ? "-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}": ""}+mc${project.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
+    version = "${project.mod_version}+mc${project.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     group = project.maven_group
 
 
