@@ -94,6 +94,7 @@ publishing {
 
 unifiedPublishing {
     project {
+        displayName = "${project.mod_name}-${project.mod_version}+mc${project.minecraft_version}"
         gameVersions = [project.property("minecraft_version")]
         gameLoaders = ["fabric"]
         changelog = Files.readString(file("../CHANGELOG.md").toPath())
