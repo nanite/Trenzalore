@@ -96,7 +96,7 @@ publishing {
 
 task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 
-    apiToken = findProperty('CURSE_TOKEN')
+    apiToken = ENV.CURSE_TOKEN
     def mainFile = upload(findProperty('curse_id'), remapJar)
     mainFile.changelog = file("../CHANGELOG.md")
     mainFile.releaseType = "beta"
