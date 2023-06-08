@@ -125,6 +125,6 @@ task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelog = file("../CHANGELOG.md")
     mainFile.releaseType = "beta"
     mainFile.changelogType = "markdown"
-    mainFile.addJavaVersion(17)
+    mainFile.addJavaVersion("Java 17")
 }
 
