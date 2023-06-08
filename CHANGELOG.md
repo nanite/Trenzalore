@@ -1,3 +1,7 @@
+### 2.0.2
+
+- Updated Build Script Again
+
 ### 2.0.1
 
 - Fixed Jar Naming 
