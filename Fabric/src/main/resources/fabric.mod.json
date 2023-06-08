@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "trenzalore",
-    "version": "${version}",
+    "version": "${mod_version}",
   
     "name": "Trenzalore",
     "description": "This mod adds a few small helpers to provide compatibility with Forge / Fabric.",
@@ -33,7 +33,7 @@
     "depends": {
       "fabricloader": ">=0.14",
       "fabric": "*",
-      "minecraft": "1.19.3",
+      "minecraft": "${minecraft_version}",
       "java": ">=17"
     }
   }

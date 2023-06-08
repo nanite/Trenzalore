@@ -1,9 +1,11 @@
+import java.nio.file.Files
+
 plugins {
     id 'java'
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id 'net.minecraftforge.gradle' version '6.0.+'
+    id "me.shedaniel.unified-publishing" version "0.1.+"
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 
 }
@@ -79,7 +81,16 @@ tasks.withType(JavaCompile) {
 
 processResources {
     from commonProject.sourceSets.main.resources
+
+    def buildProps = project.properties.clone()
+    buildProps.put('file', [jarVersion: project.version])
+    buildProps.put("mod_version", project.version)
+    buildProps.put("minecraft_version", parent.property("minecraft_version"))
+    filesMatching("META-INF/mods.toml") {
+        expand buildProps
+    }
 }
+
 
 
 jar.finalizedBy('reobfJar')
@@ -107,19 +118,27 @@ publishing {
 }
 
 
-if (ENV.CURSE_TOKEN) {
-    curseforge {
-        apiKey = ENV.CURSE_TOKEN
-        project {
-            id = project.curse_id
-            releaseType = "beta"
-            addGameVersion "Forge"
-            addGameVersion "${minecraft_version}"
-            mainArtifact(jar)
-            changelog = file("../CHANGELOG.md")
-            changelogType = 'markdown'
+unifiedPublishing {
+    project {
+        gameVersions = [project.property("minecraft_version")]
+        gameLoaders = ["fabric"]
+        changelog = Files.readString(file("../CHANGELOG.md").toPath())
+        releaseType = "beta"
+
+        mainPublication tasks.jar
+
+        String cfToken = System.getenv("CURSE_TOKEN")
+        if (cfToken != null) {
+            curseforge {
+                token = cfToken
+                id = project.curse_id
+            }
+            depends {
+                curseforge = "870210"
+            }
         }
+
     }
 }
 
-parent.tasks.curseforgePublish.dependsOn tasks.curseforge
+parent.tasks.curseforgePublish.dependsOn tasks.publishUnified
