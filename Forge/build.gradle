@@ -133,9 +133,6 @@ unifiedPublishing {
                 token = cfToken
                 id = project.curse_id
             }
-            depends {
-                curseforge = "870210"
-            }
         }
 
     }
