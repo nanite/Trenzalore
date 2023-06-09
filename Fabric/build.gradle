@@ -1,19 +1,21 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
     id 'idea'
     id 'net.darkhax.curseforgegradle' version '1.0.14'
-
 }
+
+archivesBaseName = "${project.property("mod_name")}-${project.name}"
+
+Project commonProject = parent.project("Common")
+
+def mixinEnabled = project.property("mixinsEnabled") == "true"
+def mixinDebug = project.property("enableMixinDebug") == "true"
+def fabricDataGen = project.property("fabricDataGen") == "true"
 
 apply {
     from file("../gradle/scripts/maven.gradle")
 }
-
-
-Project commonProject = parent.project("Common")
-
-archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -24,29 +26,30 @@ dependencies {
 }
 
 loom {
-    mixin {
-        defaultRefmapName = "${mod_id}.refmap.json"
+    if(mixinEnabled) {
+        mixin {
+            defaultRefmapName = "${mod_id}.refmap.json"
+        }
     }
     runs {
         client {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
-            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.debug.export=${mixinDebug}")
             runDir("run_client")
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
-            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.debug.export=${mixinDebug}")
             runDir("run_server")
         }
         data {
             inherit client
             setConfigName("Fabric Data")
-            ideConfigGenerated(true)
-
+            ideConfigGenerated(fabricDataGen)
 
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/generated/resources")}")
@@ -58,17 +61,8 @@ loom {
     }
 }
 
-
 processResources {
     from commonProject.sourceSets.main.resources
-
-    def buildProps = project.properties.clone()
-    buildProps.put("version", project.version)
-    buildProps.put("mod_version", parent.property("mod_version"))
-    buildProps.put("minecraft_version", parent.property("minecraft_version"))
-    filesMatching("fabric.mod.json") {
-        expand buildProps
-    }
 }
 
 tasks.withType(JavaCompile) {
@@ -76,7 +70,6 @@ tasks.withType(JavaCompile) {
 }
 
 task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-
     apiToken = ENV.CURSE_TOKEN
     def mainFile = upload(findProperty('curse_id'), remapJar)
     mainFile.changelog = file("../CHANGELOG.md")
@@ -84,5 +77,3 @@ task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelogType = "markdown"
     mainFile.addJavaVersion("Java 17")
 }
-
-

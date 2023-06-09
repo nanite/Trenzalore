@@ -1,9 +1,16 @@
 subprojects {
+
     apply plugin: 'java'
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+    def env = System.getenv();
+    def isSnapshot = env.SNAPSHOT == "true"
+    ext.ENV = env
+    ext.SNAPSHOT = isSnapshot
 
+    version = "${parent.mod_version}${!isSnapshot ? "-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}": ""}+mc${parent.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
+    group = parent.maven_group
 
     jar {
         from(rootProject.file("LICENSE")) {
@@ -11,34 +18,29 @@ subprojects {
         }
         manifest {
             attributes([
-                'Specification-Title'     : mod_name,
-                'Specification-Vendor'    : mod_author,
-                'Specification-Version'   : project.jar.archiveVersion,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Timestamp'               : System.currentTimeMillis(),
-                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                'Built-On-Minecraft'      : minecraft_version
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    'Timestamp'               : System.currentTimeMillis(),
+                    'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                    'Built-On-Minecraft'      : minecraft_version
             ])
         }
     }
-
-    def env = System.getenv();
-    def isSnapshot = env.SNAPSHOT == "true"
-    ext.ENV = env
-    ext.SNAPSHOT = isSnapshot
-
-    version = "${project.mod_version}+mc${project.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
-    group = project.maven_group
-
 
     repositories {
         mavenCentral()
         maven {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = 'Nanite Releases'
+            url = 'https://maven.nanite.dev/releases'
         }
     }
 
@@ -47,10 +49,26 @@ subprojects {
         options.release = 17
     }
 
+
+    sourceSets.main.resources.srcDir 'src/generated/resources'
+
     java {
         withSourcesJar()
     }
+
+    processResources {
+
+        def buildProps = project.properties.clone()
+
+        buildProps.put('file', [jarVersion: project.version])
+
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml']) {
+
+            expand buildProps
+        }
+    }
 }
+
 
 task curseforgePublish {
     doLast {

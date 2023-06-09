@@ -5,20 +5,25 @@ plugins {
     id 'net.minecraftforge.gradle' version '6.0.+'
     id 'net.darkhax.curseforgegradle' version '1.0.14'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-
 }
-
-Project commonProject = parent.project("Common")
-
-archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
 apply {
     from file("../gradle/scripts/maven.gradle")
 }
 
-mixin {
-    add commonProject.sourceSets.main, "${mod_id}.refmap.json"
-    config("${mod_id}.mixins.json")
+archivesBaseName = "${project.property("mod_name")}-${project.name}"
+
+Project commonProject = parent.project("Common")
+
+def mixinEnabled = project.property("mixinsEnabled") == "true"
+def forgeDataGen = project.property("forgeDataGen") == "true"
+
+if(mixinEnabled) {
+    println("Mixins Enabled!")
+    mixin {
+        add commonProject.sourceSets.main, "${mod_id}.refmap.json"
+        config("${mod_id}.mixins.json")
+    }
 }
 
 minecraft {
@@ -27,10 +32,12 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'ForgeClient'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            ideaModule "${parent.name}.${project.name}.main"
+            taskName 'Client'
+            if(mixinEnabled) {
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            }
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -41,10 +48,12 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'ForgeServer'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            ideaModule "${parent.name}.${project.name}.main"
+            taskName 'Server'
+            if(mixinEnabled) {
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            }
             mods {
                 modServerRun {
                     source sourceSets.main
@@ -52,29 +61,32 @@ minecraft {
                 }
             }
         }
-        data {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            taskName 'ForgeData'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                modDataRun {
-                    source sourceSets.main
-                    source commonProject.sourceSets.main
+
+        if(forgeDataGen) {
+            data {
+                workingDirectory project.file('run')
+                ideaModule "${rootProject.name}.${project.name}.main"
+                args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+                taskName 'Data'
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+                mods {
+                    modDataRun {
+                        source sourceSets.main
+                        source commonProject.sourceSets.main
+                    }
                 }
             }
         }
     }
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
-
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
     compileOnly commonProject
+    if(mixinEnabled) {
+        annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    }
 }
 
 tasks.withType(JavaCompile) {
@@ -83,20 +95,9 @@ tasks.withType(JavaCompile) {
 
 processResources {
     from commonProject.sourceSets.main.resources
-
-    def buildProps = project.properties.clone()
-    buildProps.put('file', [jarVersion: project.version])
-    buildProps.put("mod_version", project.version)
-    buildProps.put("minecraft_version", parent.property("minecraft_version"))
-    filesMatching("META-INF/mods.toml") {
-        expand buildProps
-    }
 }
 
-
-
 jar.finalizedBy('reobfJar')
-
 
 task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 
@@ -107,3 +108,4 @@ task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelogType = "markdown"
     mainFile.addJavaVersion("Java 17")
 }
+

@@ -8,8 +8,6 @@ apply {
     from file("../gradle/scripts/maven.gradle")
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
-
 archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
 minecraft {
@@ -17,16 +15,7 @@ minecraft {
 }
 
 dependencies {
-     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-     compileOnly "org.ow2.asm:asm-tree:9.5"
-}
+    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+    compileOnly "org.ow2.asm:asm-tree:9.5"
 
-processResources {
-
-    def buildProps = project.properties.clone()
-
-    filesMatching(['pack.mcmeta']) {
-
-        expand buildProps
-    }
 }
