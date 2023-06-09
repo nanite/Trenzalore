@@ -1,3 +1,7 @@
+### 2.1.1
+
+- Fixed Issue where CreativeTab would crash with forge
+
 ### 2.1.0
 
 - Add Creative Tab Helper

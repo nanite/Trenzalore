@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.Supplier;
 
 public interface IPlatformHelper {
 
@@ -26,7 +27,7 @@ public interface IPlatformHelper {
     <T extends CriterionTrigger<?>> T registerCriterion(T criterion);
 
     @ApiStatus.Internal
-    void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Item> item);
+    void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item);
 
     @ApiStatus.Internal
     <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects);

@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class FabricPlatformHelper implements IPlatformHelper {
     @Override
@@ -41,8 +42,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     @ApiStatus.Internal
-    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Item> items) {
-        ItemGroupEvents.modifyEntriesEvent(tabResourceKey).register(entries -> items.forEach(entries::accept));
+    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> items) {
+        ItemGroupEvents.modifyEntriesEvent(tabResourceKey).register(entries -> items.forEach(itemSupplier -> entries.accept(itemSupplier.get())));
     }
 
     @Override

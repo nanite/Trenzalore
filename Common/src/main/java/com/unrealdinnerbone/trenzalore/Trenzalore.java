@@ -20,6 +20,8 @@ public class Trenzalore {
                             List<RegistryObjects<?>> registryObjects = iRegistry.getRegistryObjects();
                             registryObjects
                                     .forEach(registryObject -> Services.PLATFORM.registryRegistryObjects(iRegistry.getModID(), registryObject));
+                            iRegistry.afterRegistred();
+
                         });
     }
 }

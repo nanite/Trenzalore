@@ -23,11 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @ApiStatus.Internal
 public class ForgePlatformHelper implements IPlatformHelper {
 
-    private static final Map<ResourceKey<CreativeModeTab>, List<Item>> CREATIVE_TAB_MAP = new HashMap<>();
+    private static final Map<ResourceKey<CreativeModeTab>, List<Supplier<Item>>> CREATIVE_TAB_MAP = new HashMap<>();
     @Override
     public String getPlatform() {
         return "Forge";
@@ -52,7 +53,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Item> item) {
+    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item) {
         if(CREATIVE_TAB_MAP.containsKey(tabResourceKey)) {
             CREATIVE_TAB_MAP.get(tabResourceKey).addAll(item);
         }else {
@@ -75,7 +76,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
 
     @ApiStatus.Internal
-    public static Map<ResourceKey<CreativeModeTab>, List<Item>> getCreativeTabMap() {
+    public static Map<ResourceKey<CreativeModeTab>, List<Supplier<Item>>> getCreativeTabMap() {
         return CREATIVE_TAB_MAP;
     }
 
