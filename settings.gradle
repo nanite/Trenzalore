@@ -2,6 +2,10 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven {
+            name = 'Creeperhost'
+            url = 'https://maven.creeperhost.net/'
+        }
+        maven {
             name = 'Forge'
             url = 'https://maven.minecraftforge.net/'
         }
