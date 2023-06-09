@@ -9,7 +9,9 @@ public interface IRegistry {
 
     String getModID();
 
-    void afterRegistred();
+    default void afterRegistered() {
+
+    }
 
 
 }
