@@ -7,11 +7,13 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
+
+archivesBaseName = "${project.property("mod_name")}-${project.name}"
+
 apply {
     from file("../gradle/scripts/maven.gradle")
 }
 
-archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
 Project commonProject = parent.project("Common")
 
