@@ -4,6 +4,11 @@ plugins {
     id 'maven-publish'
 }
 
+apply {
+    from file("../gradle/scripts/maven.gradle")
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
 
 minecraft {
     version(minecraft_version)
@@ -21,28 +26,5 @@ processResources {
     filesMatching(['pack.mcmeta']) {
 
         expand buildProps
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName + "-" + project.name
-            version project.version
-            from components.java
-        }
-    }
-
-    repositories {
-        if (ENV.NANITE_TOKEN) {
-            maven {
-                url "https://maven.nanite.dev/${SNAPSHOT ? "snapshots" : "releases"}"
-                credentials {
-                    username = "nanite"
-                    password = "${ENV.NANITE_TOKEN}"
-                }
-            }
-        }
     }
 }

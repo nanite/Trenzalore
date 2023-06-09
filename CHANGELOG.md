@@ -1,3 +1,7 @@
+### 2.0.3
+
+- Fix Bug where resource pack was not being loaded from common project
+
 ### 2.0.2
 
 - Updated Build Script Again

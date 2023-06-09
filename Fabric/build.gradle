@@ -1,5 +1,3 @@
-import java.nio.file.Files
-
 plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
@@ -8,7 +6,12 @@ plugins {
 
 }
 
-Project commonProject = parent == rootProject ? parent.project("Common") : parent.project("Trenzalore-Common")
+apply {
+    from file("../gradle/scripts/maven.gradle")
+}
+
+
+Project commonProject = parent.project("Common")
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -25,26 +28,26 @@ loom {
     runs {
         client {
             client()
-            setConfigName("Trenzalore Fabric Client")
+            setConfigName("Fabric Client")
             ideConfigGenerated(true)
             vmArg("-Dmixin.debug.export=true")
             runDir("run_client")
         }
         server {
             server()
-            setConfigName("Trenzalore Fabric Server")
+            setConfigName("Fabric Server")
             ideConfigGenerated(true)
             vmArg("-Dmixin.debug.export=true")
             runDir("run_server")
         }
         data {
             inherit client
-            setConfigName("Trenzalore Fabric Data")
+            setConfigName("Fabric Data")
             ideConfigGenerated(true)
 
 
             vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/generated/resources")}")
             vmArg("-Dfabric-api.datagen.modid=${mod_id}")
 
             runDir "build/datagen"
@@ -70,30 +73,6 @@ tasks.withType(JavaCompile) {
     source(commonProject.sourceSets.main.allSource)
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName + "-" + project.name
-            version project.version
-            from components.java
-        }
-    }
-
-    repositories {
-        if (ENV.NANITE_TOKEN) {
-            maven {
-                url "https://maven.nanite.dev/${SNAPSHOT ? "snapshots" : "releases"}"
-                credentials {
-                    username = "nanite"
-                    password = "${ENV.NANITE_TOKEN}"
-                }
-            }
-        }
-    }
-}
-
-
 task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 
     apiToken = ENV.CURSE_TOKEN
@@ -104,4 +83,4 @@ task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addJavaVersion("Java 17")
 }
 
-//parent.tasks.curseforgePublish.dependsOn tasks.publishUnified
+
