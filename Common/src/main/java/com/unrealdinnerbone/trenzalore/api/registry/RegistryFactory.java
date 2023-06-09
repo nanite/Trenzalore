@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class RegistryFactory {
 
@@ -29,7 +30,7 @@ public class RegistryFactory {
         return Services.PLATFORM.registerCriterion(criterion);
     }
 
-    public static void registerCreativeTabItems(ResourceKey<CreativeModeTab> tabResourceKey, List<Item> item) {
+    public static void registerCreativeTabItems(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, item);
     }
 }
