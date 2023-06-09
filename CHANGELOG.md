@@ -1,3 +1,7 @@
+### 2.0.4
+
+- Fixed Jar File Name
+
 ### 2.0.3
 
 - Fix Bug where resource pack was not being loaded from common project

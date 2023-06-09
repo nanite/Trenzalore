@@ -30,7 +30,6 @@ subprojects {
     ext.ENV = env
     ext.SNAPSHOT = isSnapshot
 
-    archivesBaseName = project.mod_name
     version = "${project.mod_version}+mc${project.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     group = project.maven_group
 

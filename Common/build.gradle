@@ -10,6 +10,8 @@ apply {
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
+archivesBaseName = "${project.property("mod_name")}-${project.name}"
+
 minecraft {
     version(minecraft_version)
 }
