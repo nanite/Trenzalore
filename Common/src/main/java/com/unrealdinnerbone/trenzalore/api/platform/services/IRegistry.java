@@ -8,4 +8,6 @@ public interface IRegistry {
     List<RegistryObjects<?>> getRegistryObjects();
 
     String getModID();
+
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TrenzaloreForgeRegistry implements IRegistry {
 
-    private static final RegistryObjects<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = RegistryFactory.create(Trenzalore.MOD_ID, ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
+    private static final RegistryObjects<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = RegistryFactory.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
 
     public static final RegistryEntry<Codec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("simple", () -> SimpleItemModifier.CODEC);
 
