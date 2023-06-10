@@ -1,3 +1,7 @@
+### 2.2.2
+
+- Add Generic Registry methods
+
 ### 2.2.1
 
 - Fix Maven Publish for Forge Projects 

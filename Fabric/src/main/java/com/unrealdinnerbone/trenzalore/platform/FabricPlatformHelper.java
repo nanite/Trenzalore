@@ -50,7 +50,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
         ResourceKey<Registry<T>> registryKey = registryObjects.registryKey();
         Registry<T> registry = (Registry<T>) BuiltInRegistries.REGISTRY.get(registryKey.location());
-        for (RegistryEntry<T> object : registryObjects.objects()) {
+        for (RegistryEntry<? extends T> object : registryObjects.objects()) {
             ResourceLocation id = new ResourceLocation(modId, object.name());
             Registry.register(registry, id, object.get());
         }
