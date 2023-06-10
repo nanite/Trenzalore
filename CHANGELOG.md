@@ -1,3 +1,7 @@
+### 2.2.1
+
+- Fix Maven Publish for Forge Projects 
+
 ### 2.2.0
 
 - Rewrote Loot Modifiers so other mods can use without adding their own

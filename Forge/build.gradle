@@ -10,10 +10,6 @@ plugins {
 
 archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
-apply {
-    from file("../gradle/scripts/maven.gradle")
-}
-
 
 Project commonProject = parent.project("Common")
 
@@ -111,3 +107,27 @@ task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addJavaVersion("Java 17")
 }
 
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            artifact jar
+        }
+    }
+
+    repositories {
+        if (ENV.NANITE_TOKEN) {
+            maven {
+                url "https://maven.nanite.dev/${SNAPSHOT ? "snapshots" : "releases"}"
+                credentials {
+                    username = "nanite"
+                    password = "${ENV.NANITE_TOKEN}"
+                }
+            }
+        }
+    }
+}
