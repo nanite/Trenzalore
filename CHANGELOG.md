@@ -1,3 +1,7 @@
+### 2.2.0
+
+- Rewrote Loot Modifiers so other mods can use without adding their own
+
 ### 2.1.1
 
 - Fixed Issue where CreativeTab would crash with forge

@@ -1,9 +1,17 @@
 {
-  "type": "trenzalore:simple",
+  "type": "trenzalore:replace",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:chests/jungle_temple_dispenser"
     }
-  ]
+  ],
+  "item": "minecraft:arrow",
+  "stack": {
+    "Count": 1,
+    "id": "minecraft:tipped_arrow",
+    "tag": {
+      "Potion": "minecraft:poison"
+    }
+  }
 }
