@@ -1,3 +1,7 @@
+### 2.3.0
+
+- Added Util for creating BlockEntityTypes
+
 ### 2.2.2
 
 - Add Generic Registry methods
