@@ -24,7 +24,7 @@ public class RegistryFactory {
         return Services.PLATFORM.registerCriterion(criterion);
     }
 
-    public static void registerCreativeTabItems(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item) {
+    public static void registerCreativeTabItems(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, item);
     }
 }

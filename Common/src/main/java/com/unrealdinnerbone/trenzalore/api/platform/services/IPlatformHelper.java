@@ -34,7 +34,7 @@ public interface IPlatformHelper {
     <T extends CriterionTrigger<?>> T registerCriterion(T criterion);
 
     @ApiStatus.Internal
-    void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item);
+    void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item);
 
     @ApiStatus.Internal
     <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects);

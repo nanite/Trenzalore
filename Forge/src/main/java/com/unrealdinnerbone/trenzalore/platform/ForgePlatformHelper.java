@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 @ApiStatus.Internal
 public class ForgePlatformHelper implements IPlatformHelper {
 
-    private static final Map<ResourceKey<CreativeModeTab>, List<Supplier<Item>>> CREATIVE_TAB_MAP = new HashMap<>();
+    private static final Map<ResourceKey<CreativeModeTab>, List<Supplier<? extends Item>>> CREATIVE_TAB_MAP = new HashMap<>();
     @Override
     public String getPlatform() {
         return "Forge";
@@ -60,7 +60,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> item) {
+    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item) {
         if(CREATIVE_TAB_MAP.containsKey(tabResourceKey)) {
             CREATIVE_TAB_MAP.get(tabResourceKey).addAll(item);
         }else {
@@ -88,7 +88,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
 
     @ApiStatus.Internal
-    public static Map<ResourceKey<CreativeModeTab>, List<Supplier<Item>>> getCreativeTabMap() {
+    public static Map<ResourceKey<CreativeModeTab>, List<Supplier<? extends Item>>> getCreativeTabMap() {
         return CREATIVE_TAB_MAP;
     }
 

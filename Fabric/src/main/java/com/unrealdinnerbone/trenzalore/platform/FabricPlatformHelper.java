@@ -49,7 +49,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     @ApiStatus.Internal
-    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<Item>> items) {
+    public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> items) {
         ItemGroupEvents.modifyEntriesEvent(tabResourceKey).register(entries -> items.forEach(itemSupplier -> entries.accept(itemSupplier.get())));
     }
 
