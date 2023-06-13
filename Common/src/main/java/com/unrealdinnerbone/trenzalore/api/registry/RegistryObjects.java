@@ -1,12 +1,8 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
 import com.google.common.base.Suppliers;
-import com.unrealdinnerbone.trenzalore.content.mixin.CreativeTabAccessor;
-import joptsimple.HelpFormatter;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.commands.HelpCommand;
-import net.minecraft.world.item.CreativeModeTabs;
 
 import java.util.List;
 import java.util.function.Supplier;
