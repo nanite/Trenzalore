@@ -7,8 +7,7 @@
   "refmap": "trenzalore.refmap.json",
   "mixins": [
     "BoatMixin",
-    "PiglinBruteAIMixin",
-    "CreativeTabAccessor"
+    "PiglinBruteAIMixin"
   ],
   "client": [
   ],
