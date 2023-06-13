@@ -24,6 +24,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
         if(CREATIVE_TAB_MAP.containsKey(tabResourceKey)) {
             CREATIVE_TAB_MAP.get(tabResourceKey).addAll(item);
         }else {
-            CREATIVE_TAB_MAP.put(tabResourceKey, item);
+            CREATIVE_TAB_MAP.put(tabResourceKey, new ArrayList<>(item));
         }
     }
 

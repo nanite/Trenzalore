@@ -16,12 +16,6 @@ import java.util.function.Supplier;
 
 public class RegistryFactory {
 
-    @Deprecated(forRemoval = true)
-    @ApiStatus.ScheduledForRemoval(inVersion = "3.0.0")
-    public static <T> RegistryObjects<T> create(String modid, ResourceKey<Registry<T>> registry) {
-        return new RegistryObjects<>(registry, new ArrayList<>());
-    }
-
     public static <T> RegistryObjects<T> create(ResourceKey<Registry<T>> registry) {
         return new RegistryObjects<>(registry, new ArrayList<>());
     }
