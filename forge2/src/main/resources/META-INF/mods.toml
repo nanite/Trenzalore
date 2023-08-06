@@ -1,0 +1,23 @@
+modLoader="javafml"
+loaderVersion="[44,)"
+license="All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks"
+[[mods]]
+modId="trenzalore"
+version="${mod_version}"
+displayName="Trenzalore"
+logoFile="assets/trenzalore/logo.png"
+credits="Mikey for the help!"
+authors="UnRealDinnerbone"
+description="This mod adds a few small helpers to provide compatibility with Forge / Fabric."
+[[dependencies.trenzalore]]
+    modId="forge"
+    mandatory=true
+    versionRange="[44,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.trenzalore]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[${minecraft_version}]"
+    ordering="NONE"
+    side="BOTH"

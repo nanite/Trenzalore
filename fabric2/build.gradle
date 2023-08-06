@@ -1,0 +1,4 @@
+multiLoader.fabric() {
+    fabricLoaderVersion.set("${fabric_loader_version}")
+    fabricApiVersion.set("${fabric_version}")
+}

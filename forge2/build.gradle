@@ -1,0 +1,4 @@
+multiLoader.forge() {
+    forgeVersion.set("${forge_version}")
+}
+
