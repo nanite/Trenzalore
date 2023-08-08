@@ -1,8 +1,10 @@
 import dev.nanite.mlp.tasks.SingleOutputJar
 
 plugins {
-    id("dev.nanite.mlp") version("0.0.1")
+    id("dev.nanite.mlp") version("0.0.2")
     id("java")
+    id "me.modmuss50.mod-publish-plugin" version "0.3.0"
+
     id("fabric-loom") version("1.3-SNAPSHOT") apply(false)
     id("net.minecraftforge.gradle") version("6.0.+") apply(false)
 }
@@ -19,16 +21,18 @@ multiLoader.root() {
 allprojects {
     def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
+    setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
+    group = "com.unrealdinnerbone"
 }
 
 subprojects {
     apply plugin: 'dev.nanite.mlp'
-//    apply plugin: 'maven-publish'
+    apply plugin: 'maven-publish'
 
     sourceSets.main.resources.srcDir 'src/generated/resources'
 
     base {
-        archivesName = "${mod_name}-${project.name}"
+        archivesName = "${mod_name}-${project.name}".toLowerCase()
     }
 
     repositories {
@@ -37,86 +41,50 @@ subprojects {
             url = uri("https://maven.creeperhost.net/")
         }
     }
+
+    publishing {
+        repositories {
+            if (providers.environmentVariable("NANITE_DEPLOY")) {
+                maven {
+                    url "https://maven.nanite.dev/releases"
+                    credentials {
+                        username = "nanite"
+                        password = providers.environmentVariable("NANITE_DEPLOY")
+                    }
+                }
+            }
+        }
+        publications {
+            mavenJava(MavenPublication) {
+                groupId project.group
+                artifactId project.getArchivesBaseName()
+            }
+        }
+    }
+
 }
 
-tasks.withType(SingleOutputJar.class) {
+tasks.register("singleJar", SingleOutputJar.class) {
     getArchiveIdentifier().set("TrenzaloreML")
     getOutput().set(project.file("build/libs/Trenzalore-${project.version}.jar"))
 }
 
-//publishMods {
-//    dryRun = providers.environmentVariable("CURSE_TOKEN").getOrNull() == null
-//    changelog = file("./CHANGELOG.md").text
-//    version = "${mod_version}"
-//    type = STABLE
-//
-//    def fabricOptions = publishOptions {
-//        file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
-//        displayName = "${project.name} Fabric ${mod_version}+mc${minecraft_version}"
-//        modLoaders.add("fabric")
-//    }
-//
-//    def forgeOptions = publishOptions {
-//        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
-//        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
-//        modLoaders.add("forge")
-//    }
-//
-//    def neoOptions = publishOptions {
-//        file = project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
-//        displayName = "${project.name} NeoForged ${mod_version}+mc${minecraft_version}"
-//        modLoaders.add("neoforge")
-//    }
-//
-//    def curseForgeOptions = curseforgeOptions {
-//        accessToken = providers.environmentVariable("CURSE_TOKEN")
-//        projectId = "${curseforge_id}"
-//        minecraftVersions.add("${minecraft_version}")
-//    }
-//
-//    def modrinthOptions = modrinthOptions {
-//        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-//        projectId = "${modrinth_id}"
-//        minecraftVersions.add("${minecraft_version}")
-//    }
-//
-//    curseforge("curseforgeFabric") {
-//        from(curseForgeOptions, fabricOptions)
-//        requires {
-//            slug = "fabric-api"
-//        }
-//    }
-//
-//    curseforge("curseforgeForge") {
-//        from(curseForgeOptions, forgeOptions)
-//    }
-//
-//    curseforge("curseforgeNeo") {
-//        from(curseForgeOptions, neoOptions)
-//    }
-//
-//    modrinth("modrinthFabric") {
-//        from(modrinthOptions, fabricOptions)
-//        requires {
-//            slug = "fabric-api"
-//        }
-//    }
-//
-//    modrinth("modrinthForge") {
-//        from(modrinthOptions, forgeOptions)
-//    }
-//
-//    modrinth("modrinthNeo") {
-//        from(modrinthOptions, neoOptions)
-//    }
-//
-//    github {
-//        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
-//        additionalFiles.from project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
-//        additionalFiles.from project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
-//        repository = "${github_repo}"
-//        accessToken = providers.environmentVariable("GITHUB_TOKEN")
-//        commitish = providers.environmentVariable("GITHUB_SHA").orElse("dryRun")
-//    }
-//}
+
+publishMods {
+    file = tasks.singleJar.output
+    dryRun = providers.environmentVariable("CURSE_TOKEN").getOrNull() == null
+    changelog = file("./CHANGELOG.md").text
+    version = "${mod_version}"
+    type = STABLE
+
+    curseforge {
+        projectId = project.property("curse_id")
+        accessToken = providers.environmentVariable("CURSE_TOKEN")
+        modLoaders.add("fabric")
+        modLoaders.add("forge")
+        requires {
+            slug = "fabric-api"
+        }
+    }
+}
 

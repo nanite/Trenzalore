@@ -3,12 +3,4 @@ multiLoader.fabric() {
     fabricApiVersion.set("${fabric_version}")
 }
 
-
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifactId base.archivesName.get()
-//            from components.java
-//        }
-//    }
-//}
+publishing.publications.mavenJava.from components.java

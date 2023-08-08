@@ -1,9 +1,7 @@
 package com.unrealdinnerbone.trenzalore.api.platform.services;
 
-import com.unrealdinnerbone.trenzalore.api.registry.RegistryFactory;
+import com.unrealdinnerbone.trenzalore.api.registry.Regeneration;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -46,7 +44,7 @@ public interface IPlatformHelper {
     @Deprecated(forRemoval = true)
     @ApiStatus.ScheduledForRemoval(inVersion = "4.0.0")
     default <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> creator, Block... validBlocks) {
-        return RegistryFactory.createBlockEntityType(creator, validBlocks);
+        return Regeneration.createBlockEntityType(creator, validBlocks);
     }
 
 }

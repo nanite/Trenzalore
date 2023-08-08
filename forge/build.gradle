@@ -2,12 +2,11 @@ multiLoader.forge() {
     forgeVersion.set("${forge_version}")
 }
 
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifactId base.archivesName.get()
-//            from components.java
-//            fg.component(it)
-//        }
-//    }
-//}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            fg.component(it)
+        }
+    }
+}
