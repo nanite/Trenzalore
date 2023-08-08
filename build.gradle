@@ -1,10 +1,10 @@
-import dev.imabad.mlp.tasks.SingleOutputJar
+import dev.nanite.mlp.tasks.SingleOutputJar
 
 plugins {
-    id("dev.imabad.mlp") version("1.0.0-SNAPSHOT")
+    id("dev.nanite.mlp") version("2.0.0")
+    id("java")
     id("fabric-loom") version("1.3-SNAPSHOT") apply(false)
     id("net.minecraftforge.gradle") version("6.0.+") apply(false)
-    id("java")
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -20,8 +20,10 @@ allprojects {
     def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
 }
+
 subprojects {
-    apply plugin: 'dev.imabad.mlp'
+    apply plugin: 'dev.nanite.mlp'
+//    apply plugin: 'maven-publish'
 
     sourceSets.main.resources.srcDir 'src/generated/resources'
 

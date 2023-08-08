@@ -63,7 +63,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public @Nullable <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo) {
+    public @Nullable <T extends Entity> Entity teleportInternal(T entity, ServerLevel level, PortalInfo portalInfo) {
         return entity.changeDimension(level, new SimpleTeleporter(portalInfo));
     }
     public record SimpleTeleporter(PortalInfo portalInfo) implements ITeleporter {

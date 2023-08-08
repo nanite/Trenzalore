@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -30,7 +31,13 @@ public interface IPlatformHelper {
     Path getConfigPath();
 
     @Nullable
-    <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo);
+    default <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo) {
+        return teleportInternal(entity, level, portalInfo);
+    }
+
+    @Nullable
+    @ApiStatus.Internal
+    <T extends Entity> Entity teleportInternal(T entity, ServerLevel level, PortalInfo portalInfo);
     @ApiStatus.Internal
     void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item);
     @ApiStatus.Internal
