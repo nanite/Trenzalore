@@ -44,12 +44,12 @@ subprojects {
 
     publishing {
         repositories {
-            if (providers.environmentVariable("NANITE_TOKEN")) {
+            if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
                 maven {
-                    url "https://maven.nanite.dev/releases"
+                    url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
                     credentials {
                         username = "nanite"
-                        password = providers.environmentVariable("NANITE_TOKEN")
+                        password = providers.environmentVariable("NANITE_TOKEN").get()
                     }
                 }
             }
