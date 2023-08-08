@@ -46,6 +46,7 @@ subprojects {
         repositories {
             if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
                 maven {
+                    def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
                     url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
                     credentials {
                         username = "nanite"
