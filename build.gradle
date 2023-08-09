@@ -21,7 +21,6 @@ multiLoader.root() {
 
 allprojects {
     def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
     group = "com.unrealdinnerbone"
