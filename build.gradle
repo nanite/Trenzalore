@@ -20,7 +20,8 @@ multiLoader.root() {
 }
 
 allprojects {
-    def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
+    def isSnapshot = providers.environmentVariable("SNAPSHOT").is("true")
+
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
     group = "com.unrealdinnerbone"
@@ -47,7 +48,8 @@ subprojects {
         repositories {
             if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
                 maven {
-                    def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
+                    def isSnapshot = providers.environmentVariable("SNAPSHOT").is("true")
+                    println("Publishing to Nanite ${isSnapshot ? 'Snapshots' : 'Releases'}")
                     url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
                     credentials {
                         username = "nanite"
