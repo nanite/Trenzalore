@@ -12,9 +12,10 @@ plugins {
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 multiLoader.root() {
-    minecraftVersion.set("1.20.1")
-    modID.set("trenzalore")
+    minecraftVersion.set(project.property("minecraft_version"))
+    modID.set(project.property("mod_id"))
     singleOutputJar.set(true)
+    splitSources.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
 }
 
@@ -66,8 +67,8 @@ subprojects {
 }
 
 tasks.register("singleJar", SingleOutputJar.class) {
-    getArchiveIdentifier().set("TrenzaloreML")
-    getOutput().set(project.file("build/libs/Trenzalore-${project.version}.jar"))
+    getArchiveIdentifier().set("${project.property("mod_name")}ML")
+    getOutput().set(project.file("build/libs/${project.property("mod_name")}-${project.version}.jar"))
 }
 
 
