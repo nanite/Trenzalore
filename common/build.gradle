@@ -1,12 +1,3 @@
 multiLoader.common()
 
 publishing.publications.mavenJava.from components.java
-
-jar {
-    manifest {
-        attributes (
-                'Fabric-Loom-Remap': 'true',
-        )
-    }
-
-}

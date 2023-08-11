@@ -1,11 +1,11 @@
 import dev.nanite.mlp.tasks.SingleOutputJar
 
 plugins {
-    id("dev.nanite.mlp") version("0.0.2")
+    id("dev.nanite.mlp") version("0.0.4")
     id("java")
     id "me.modmuss50.mod-publish-plugin" version "0.3.0"
 
-    id("fabric-loom") version("1.3-SNAPSHOT") apply(false)
+    id("fabric-loom") version("1.3.9") apply(false)
     id("net.minecraftforge.gradle") version("6.0.+") apply(false)
 }
 
@@ -30,7 +30,8 @@ subprojects {
     apply plugin: 'dev.nanite.mlp'
     apply plugin: 'maven-publish'
 
-    sourceSets.main.resources.srcDir 'src/generated/resources'
+
+    sourceSets.main.resources.srcDir project.file('src/generated/resources')
 
     base {
         archivesName = "${mod_name}-${project.name}".toLowerCase()
@@ -42,14 +43,16 @@ subprojects {
             url = uri("https://maven.creeperhost.net/")
         }
     }
+    tasks.withType(ProcessResources).configureEach {
+        outputs.upToDateWhen { false }
+    }
 
     publishing {
         repositories {
             if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
                 maven {
                     def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-                    println("Publishing to Nanite ${isSnapshot ? 'Snapshots' : 'Releases'}")
-                    url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases2'}"
+                    url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
                     credentials {
                         username = "nanite"
                         password = providers.environmentVariable("NANITE_TOKEN").get()
@@ -64,6 +67,7 @@ subprojects {
             }
         }
     }
+
 
 }
 
