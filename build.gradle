@@ -1,7 +1,7 @@
 import dev.nanite.mlp.tasks.SingleOutputJar
 
 plugins {
-    id("dev.nanite.mlp") version("0.0.4")
+    id("dev.nanite.mlp") version("0.0.3")
     id("java")
     id "me.modmuss50.mod-publish-plugin" version "0.3.0"
 
