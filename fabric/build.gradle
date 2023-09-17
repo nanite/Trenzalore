@@ -7,6 +7,6 @@ publishing.publications.mavenJava.from components.java
 
 
 dependencies {
-    include(implementation("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}"))
-    include(implementation("com.unrealdinnerbone:UnRealConfig-core:${unreal_config_version}"))
+    include(api("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}"))
+    include(api("com.unrealdinnerbone:UnRealConfig-core:${unreal_config_version}"))
 }
