@@ -28,11 +28,11 @@ dependencies {
         exclude group: 'com.google.code.gson', module: 'gson'
         exclude group: 'org.jetbrains', module: 'annotations'
         exclude group: 'org.slf4j', module: 'slf4j-api'
+
     }
 }
 
-//jarJar {
-//    dependencies {
-//
-//    }
-//}
+
+tasks.jarJar {
+    finalizedBy("reobfJarJar")
+}
