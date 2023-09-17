@@ -35,4 +35,6 @@ dependencies {
 
 tasks.jarJar {
     finalizedBy("reobfJarJar")
+    setArchivesBaseName("${project.property("mod_name")}-${project.name}".toLowerCase())
+
 }

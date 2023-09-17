@@ -33,10 +33,10 @@ subprojects {
 
     sourceSets.main.resources.srcDir project.file('src/generated/resources')
 
-    base {
-        archivesName = "${mod_name}-${project.name}".toLowerCase()
-    }
 
+    base {
+        archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
+    }
     repositories {
         maven {
             name = "Creeperhost"
