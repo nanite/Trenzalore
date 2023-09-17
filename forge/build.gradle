@@ -2,6 +2,8 @@ multiLoader.forge() {
     forgeVersion.set("${forge_version}")
 }
 
+jarJar.enable()
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -10,3 +12,23 @@ publishing {
         }
     }
 }
+
+
+dependencies {
+    implementation ("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}") {
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'org.jetbrains', module: 'annotations'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+    jarJar("com.unrealdinnerbone:UnRealConfig-gson:[${unreal_config_version}]") {
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'org.jetbrains', module: 'annotations'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+}
+
+//jarJar {
+//    dependencies {
+//
+//    }
+//}

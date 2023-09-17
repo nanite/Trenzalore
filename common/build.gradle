@@ -1,3 +1,12 @@
 multiLoader.common()
 
 publishing.publications.mavenJava.from components.java
+
+
+dependencies {
+    implementation ("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}") {
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'org.jetbrains', module: 'annotations'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+}

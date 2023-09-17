@@ -1,4 +1,3 @@
-### 3.1.0
+### 3.2.0
 
-- Changed Workspace to MultiLoader Plugin
-- Remove Tweaks
+- Add Config Library
