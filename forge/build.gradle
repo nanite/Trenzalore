@@ -19,12 +19,8 @@ publishing {
 
 
 dependencies {
-    api ("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}") {
-        transitive = false
-    }
-    api ("com.unrealdinnerbone:UnRealConfig-core:${unreal_config_version}") {
-        transitive = false
-    }
+    api ("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}")
+    api ("com.unrealdinnerbone:UnRealConfig-core:${unreal_config_version}")
     jarJar("com.unrealdinnerbone:UnRealConfig-gson:[${unreal_config_version}]") {
         transitive = false
     }
