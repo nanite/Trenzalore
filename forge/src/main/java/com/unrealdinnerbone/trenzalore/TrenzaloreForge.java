@@ -1,5 +1,7 @@
 package com.unrealdinnerbone.trenzalore;
 
+import com.unrealdinnerbone.config.ConfigManager;
+import com.unrealdinnerbone.config.config.BooleanConfig;
 import com.unrealdinnerbone.trenzalore.platform.ForgePlatformHelper;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.common.Mod;

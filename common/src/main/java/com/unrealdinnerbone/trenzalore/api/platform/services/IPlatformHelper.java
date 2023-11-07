@@ -28,6 +28,8 @@ public interface IPlatformHelper {
 
     Path getConfigPath();
 
+    boolean isModLoaded(String modId);
+
     @Nullable
     default <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo) {
         return teleportInternal(entity, level, portalInfo);

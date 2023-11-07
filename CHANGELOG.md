@@ -1,3 +1,3 @@
-### 3.3.0
+### 3.3.10
 
-- Add Config Library
+- Added isModLoaded helper method
