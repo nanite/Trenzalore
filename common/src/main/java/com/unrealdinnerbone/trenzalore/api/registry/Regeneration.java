@@ -6,6 +6,7 @@ import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -24,16 +25,9 @@ public class Regeneration {
         return RegistryObjects.of(registry);
     }
 
-    public static <T extends CriterionTrigger<?>> T registerCriterion(T criterion) {
-        return CriteriaTriggers.register(criterion);
+    public static <T extends CriterionTrigger<?>> T registerCriterion(ResourceLocation name, T criterion) {
+        return CriteriaTriggers.register(name.toString(), criterion);
     }
-
-    @Deprecated
-    @ApiStatus.ScheduledForRemoval(inVersion = "4.0.0")
-    public static void registerCreativeTabItems(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item) {
-        addItemsToCreateTab(tabResourceKey, item);
-    }
-
     public static void addItemToCreateTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, List.of(item));
     }

@@ -1,0 +1,8 @@
+multiLoader.neo() {
+    neoVersion.set("${neo_version}")
+}
+
+
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+

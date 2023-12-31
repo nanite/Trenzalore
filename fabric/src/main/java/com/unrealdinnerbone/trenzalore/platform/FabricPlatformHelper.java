@@ -74,7 +74,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     @Nullable
-    public <T extends Entity> Entity teleportInternal(T entity, ServerLevel level, PortalInfo portalInfo) {
+    public <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo) {
         return FabricDimensions.teleport(entity, level, portalInfo);
     }
 

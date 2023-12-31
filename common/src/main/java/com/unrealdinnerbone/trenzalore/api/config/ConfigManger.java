@@ -3,8 +3,6 @@ package com.unrealdinnerbone.trenzalore.api.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
-import com.unrealdinnerbone.config.ConfigManager;
-import com.unrealdinnerbone.config.gson.GsonProvider;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.Logger;
@@ -21,7 +19,7 @@ public class ConfigManger {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Deprecated
-    @ApiStatus.ScheduledForRemoval(inVersion = "4.0.0")
+    @ApiStatus.ScheduledForRemoval(inVersion = "5.0.0")
     public static <T> T getOrCreateConfig(String name, Class<T> tClass, Supplier<T> defaultValue) {
         Path configPath = Services.PLATFORM.getConfigPath();
         Path config = configPath.resolve(name + ".json");
@@ -40,12 +38,6 @@ public class ConfigManger {
             LOGGER.error("Error loading config. Defaulting to default config", e);
             return defaultValue.get();
         }
-    }
-
-    public static ConfigManager createConfigManager(String modid) {
-        Path configPath = Services.PLATFORM.getConfigPath();
-        Path config = configPath.resolve(modid + ".json");
-        return new ConfigManager(new GsonProvider(config, GSON));
     }
 
 }

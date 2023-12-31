@@ -1,13 +1,10 @@
-import dev.nanite.mlp.tasks.SingleOutputJar
-
 plugins {
-    id("dev.nanite.mlp") version("0.0.3")
-    id("java")
-    id "me.modmuss50.mod-publish-plugin" version "0.3.0"
-
-    id("fabric-loom") version("1.3.9") apply(false)
-    id("net.minecraftforge.gradle") version("6.0.+") apply(false)
+    id("dev.nanite.mlp") version("0.1.1-SNAPSHOT")
+    id("java-library")
+    id("maven-publish")
+    id("me.modmuss50.mod-publish-plugin") version "0.3.0"
 }
+
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -15,6 +12,7 @@ multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
     modID.set(project.property("mod_id"))
     splitSources.set(true)
+    convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
 }
 
@@ -23,16 +21,19 @@ allprojects {
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
     group = "com.unrealdinnerbone"
+
+
 }
 
-
 subprojects {
-    apply plugin: 'dev.nanite.mlp'
+
+
+    apply plugin: 'java-library'
     apply plugin: 'maven-publish'
+    apply plugin: 'dev.nanite.mlp'
 
 
     sourceSets.main.resources.srcDir project.file('src/generated/resources')
-
 
     base {
         archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
@@ -84,24 +85,33 @@ publishMods {
 
     def fabricOptions = publishOptions {
         file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "${project.name} Fabric ${mod_version}+mc${minecraft_version}"
+        displayName = "[FABRIC][${minecraft_version}] ${project.name} ${mod_version}"
         modLoaders.add("fabric")
     }
 
     def forgeOptions = publishOptions {
-        file = project.provider { project(":forge").tasks.jarJar }.flatMap { it.archiveFile }
-        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
+        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
+        displayName = "[FORGE][${minecraft_version}] ${project.name} ${mod_version}"
         modLoaders.add("forge")
+    }
+
+    def neoForge = publishOptions {
+        file = project.provider { project(":neoforge").tasks.remapJar }.flatMap { it.archiveFile }
+        displayName = "[NEOFORGE][${minecraft_version}] ${project.name} ${mod_version}"
+        modLoaders.add("neoforge")
     }
 
     def curseForgeOptions = curseforgeOptions {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
-        projectId =  project.property("curse_id")
+        projectId = "${curseforge_id}"
         minecraftVersions.add("${minecraft_version}")
     }
 
     curseforge("curseforgeFabric") {
         from(curseForgeOptions, fabricOptions)
+        requires {
+            slug = "architectury-api"
+        }
         requires {
             slug = "fabric-api"
         }
@@ -109,6 +119,16 @@ publishMods {
 
     curseforge("curseforgeForge") {
         from(curseForgeOptions, forgeOptions)
+        requires {
+            slug = "architectury-api"
+        }
+    }
+
+    curseforge("curseforgeNeoForge") {
+        from(curseForgeOptions, neoForge)
+        requires {
+            slug = "architectury-api"
+        }
     }
 
 }

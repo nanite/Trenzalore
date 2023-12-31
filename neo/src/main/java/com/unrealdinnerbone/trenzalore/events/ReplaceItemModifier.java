@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ReplaceItemModifier extends LootModifier {
@@ -17,7 +17,7 @@ public class ReplaceItemModifier extends LootModifier {
     private final ItemStack stack;
     public static final Codec<ReplaceItemModifier> CODEC = RecordCodecBuilder.create(builder ->
             codecStart(builder)
-                    .and(Ingredient.CODEC.fieldOf("item")
+                    .and(Ingredient.CODEC_NONEMPTY.fieldOf("item")
                             .forGetter((modifier) -> modifier.ingredient))
                     .and(ItemStack.CODEC.fieldOf("stack")
                             .forGetter((modifier) -> modifier.stack))

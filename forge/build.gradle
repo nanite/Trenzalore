@@ -1,7 +1,3 @@
-plugins {
-    id("java-library")
-}
-
 multiLoader.forge() {
     forgeVersion.set("${forge_version}")
 }
@@ -16,19 +12,6 @@ publishing {
         }
     }
 }
-
-
-dependencies {
-    api ("com.unrealdinnerbone:UnRealConfig-gson:${unreal_config_version}")
-//    minecraftEmbed()
-    minecraftEmbed("com.unrealdinnerbone:UnRealConfig-gson:[${unreal_config_version}]") {
-        transitive = false
-    }
-    minecraftEmbed("com.unrealdinnerbone:UnRealConfig-core:[${unreal_config_version}]") {
-        transitive = false
-    }
-}
-
 
 tasks.jarJar {
     finalizedBy("reobfJarJar")
