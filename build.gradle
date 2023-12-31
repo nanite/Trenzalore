@@ -85,21 +85,22 @@ publishMods {
 
     def fabricOptions = publishOptions {
         file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "[FABRIC][${minecraft_version}] ${project.name} ${mod_version}"
+        displayName = "${project.name} Fabric ${mod_version}+mc${minecraft_version}"
         modLoaders.add("fabric")
     }
 
     def forgeOptions = publishOptions {
-        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "[FORGE][${minecraft_version}] ${project.name} ${mod_version}"
+        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
+        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
         modLoaders.add("forge")
     }
 
-    def neoForge = publishOptions {
-        file = project.provider { project(":neoforge").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "[NEOFORGE][${minecraft_version}] ${project.name} ${mod_version}"
+    def neoOptions = publishOptions {
+        file = project.provider { project(":neoforge").tasks.jar }.flatMap { it.archiveFile }
+        displayName = "${project.name} Neo ${mod_version}+mc${minecraft_version}"
         modLoaders.add("neoforge")
     }
+
 
     def curseForgeOptions = curseforgeOptions {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
@@ -119,7 +120,7 @@ publishMods {
     }
 
     curseforge("curseforgeNeoForge") {
-        from(curseForgeOptions, neoForge)
+        from(curseForgeOptions, neoOptions)
     }
 
 }
