@@ -1,3 +1,3 @@
-### 3.3.10
+### 4.0.0
 
-- Added isModLoaded helper method
+- Updated to 1.20.4
