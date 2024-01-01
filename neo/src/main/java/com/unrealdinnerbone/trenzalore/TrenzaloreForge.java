@@ -1,16 +1,18 @@
 package com.unrealdinnerbone.trenzalore;
 
 import com.unrealdinnerbone.trenzalore.platform.NeoPlatformHelper;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.IModBusEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 @Mod(Trenzalore.MOD_ID)
 public class TrenzaloreForge {
     
-    public TrenzaloreForge() {
+    public TrenzaloreForge(IEventBus modEventBus) {
         Trenzalore.init();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(TrenzaloreForge::onCreativeTab);
+        modEventBus.addListener(TrenzaloreForge::onCreativeTab);
     }
 
     public static void onCreativeTab(BuildCreativeModeTabContentsEvent event) {

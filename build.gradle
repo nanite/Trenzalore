@@ -35,6 +35,9 @@ subprojects {
 
     sourceSets.main.resources.srcDir project.file('src/generated/resources')
 
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+
     base {
         archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
     }
@@ -66,7 +69,7 @@ subprojects {
             }
         }
         publications {
-            mavenJava(MavenPublication) {
+            register("mavenJava", MavenPublication) {
                 groupId project.group
                 artifactId project.getArchivesBaseName()
             }

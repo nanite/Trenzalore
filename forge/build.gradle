@@ -2,19 +2,4 @@ multiLoader.forge() {
     forgeVersion.set("${forge_version}")
 }
 
-jarJar.enable()
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            fg.component(it)
-        }
-    }
-}
-
-tasks.jarJar {
-    finalizedBy("reobfJarJar")
-    setArchivesBaseName("${project.property("mod_name")}-${project.name}".toLowerCase())
-
-}
+publishing.publications.mavenJava.artifact jar

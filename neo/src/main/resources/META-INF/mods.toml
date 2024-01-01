@@ -11,13 +11,13 @@ authors="UnRealDinnerbone"
 description="This mod adds a few small helpers to provide compatibility with Forge / Fabric."
 [[dependencies.trenzalore]]
     modId="neoforge"
-    mandatory=true
+    required=true
     versionRange="[1.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.trenzalore]]
     modId="minecraft"
-    mandatory=true
+    required=true
     versionRange="[${minecraft_version}]"
     ordering="NONE"
     side="BOTH"
