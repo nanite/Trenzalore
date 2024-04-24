@@ -15,6 +15,11 @@ multiLoader.root() {
     splitSources.set(true)
     convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
+
+    def get = filesToExpand.get()
+    def newList = new ArrayList<>(get)
+    newList.add("META-INF/neoforge.mods.toml")
+    filesToExpand.set(newList)
 }
 
 allprojects {

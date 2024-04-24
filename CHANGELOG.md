@@ -1,3 +1,3 @@
-### 5.0.0
+### 5.0.1
 
-- Update to 1.20.5
+- Fix NeoForge
