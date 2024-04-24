@@ -1,12 +1,13 @@
 plugins {
-    id("dev.nanite.mlp") version("0.1.1")
+    id("dev.nanite.mlp") version("0.1.6")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.0'
 }
 
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
@@ -22,7 +23,12 @@ allprojects {
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
     group = "com.unrealdinnerbone"
 
-
+    idea {
+        module {
+            downloadSources = true
+            downloadJavadoc = true
+        }
+    }
 }
 
 subprojects {
@@ -35,7 +41,7 @@ subprojects {
 
     sourceSets.main.resources.srcDir project.file('src/generated/resources')
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 
     base {
@@ -45,10 +51,6 @@ subprojects {
         maven {
             name = "Creeperhost"
             url = uri("https://maven.creeperhost.net/")
-        }
-        maven {
-            name = "UnRealDinnerbone"
-            url = "https://maven.unreal.codes/releases"
         }
     }
     tasks.withType(ProcessResources).configureEach {

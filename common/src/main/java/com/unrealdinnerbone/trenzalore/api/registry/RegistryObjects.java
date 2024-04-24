@@ -13,6 +13,7 @@ public record RegistryObjects<T>(ResourceKey<Registry<T>> registryKey, List<Regi
     public static <T> RegistryObjects<T> of(ResourceKey<Registry<T>> registryKey) {
         return new RegistryObjects<>(registryKey, new ArrayList<>());
     }
+
     public <A extends T> RegistryEntry<A> register(String name, Supplier<A> object) {
         RegistryEntry<A> entry = new RegistryEntry<>(name, Suppliers.memoize(object::get));
         objects.add(entry);

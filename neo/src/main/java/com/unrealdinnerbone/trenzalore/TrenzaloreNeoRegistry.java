@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.trenzalore;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IRegistry;
 import com.unrealdinnerbone.trenzalore.api.registry.Regeneration;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
@@ -13,9 +14,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.List;
 
 public class TrenzaloreNeoRegistry implements IRegistry {
-    private static final RegistryObjects<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = Regeneration.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
-    public static final RegistryEntry<Codec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("replace", () -> ReplaceItemModifier.CODEC);
-    public static final RegistryEntry<Codec<? extends IGlobalLootModifier>> ADD_ITEM_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("add", () -> AddItemModifier.CODEC);
+    private static final RegistryObjects<MapCodec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = Regeneration.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
+    public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("replace", () -> ReplaceItemModifier.CODEC);
+    public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>> ADD_ITEM_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("add", () -> AddItemModifier.CODEC);
 
     @Override
     public List<RegistryObjects<?>> getRegistryObjects() {

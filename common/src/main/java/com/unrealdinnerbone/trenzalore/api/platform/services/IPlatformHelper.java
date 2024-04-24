@@ -32,8 +32,10 @@ public interface IPlatformHelper {
     @Nullable
     @ApiStatus.Internal
     <T extends Entity> Entity teleport(T entity, ServerLevel level, PortalInfo portalInfo);
+
     @ApiStatus.Internal
     void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item);
+
     @ApiStatus.Internal
     <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects);
 

@@ -7,6 +7,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -25,9 +29,6 @@ public class Regeneration {
         return RegistryObjects.of(registry);
     }
 
-    public static <T extends CriterionTrigger<?>> T registerCriterion(ResourceLocation name, T criterion) {
-        return CriteriaTriggers.register(name.toString(), criterion);
-    }
     public static void addItemToCreateTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, List.of(item));
     }
@@ -38,6 +39,10 @@ public class Regeneration {
 
     public static <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> creator, Block... validBlocks) {
         return BlockEntityType.Builder.of(creator::apply, validBlocks).build(null);
+    }
+
+    public static <T extends AbstractContainerMenu> MenuType<T> createMenuType(BiFunction<Integer, Inventory, T> supplier) {
+        return new MenuType<>(supplier::apply, FeatureFlagSet.of());
     }
 
 }

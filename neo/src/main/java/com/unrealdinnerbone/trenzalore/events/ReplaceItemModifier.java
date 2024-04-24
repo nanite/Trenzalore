@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.trenzalore.events;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +16,7 @@ public class ReplaceItemModifier extends LootModifier {
 
     private final Ingredient ingredient;
     private final ItemStack stack;
-    public static final Codec<ReplaceItemModifier> CODEC = RecordCodecBuilder.create(builder ->
+    public static final MapCodec<ReplaceItemModifier> CODEC = RecordCodecBuilder.mapCodec(builder ->
             codecStart(builder)
                     .and(Ingredient.CODEC_NONEMPTY.fieldOf("item")
                             .forGetter((modifier) -> modifier.ingredient))
@@ -42,7 +43,7 @@ public class ReplaceItemModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

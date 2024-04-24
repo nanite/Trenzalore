@@ -6,6 +6,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import java.util.List;
 
 public interface IRegistry {
+
     List<RegistryObjects<?>> getRegistryObjects();
 
     String getModID();

@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.trenzalore.events;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
@@ -13,13 +13,12 @@ import javax.annotation.Nonnull;
 
 public class AddItemModifier extends LootModifier {
 
-    private final ItemStack stack;
-    public static final Codec<AddItemModifier> CODEC = RecordCodecBuilder.create((builder) ->
-            codecStart(builder)
-                    .and(ItemStack.CODEC.fieldOf("stack")
-                            .forGetter((modifier) -> modifier.stack))
-                    .apply(builder, AddItemModifier::new));
 
+    public static final MapCodec<AddItemModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            IGlobalLootModifier.LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(glm -> glm.conditions),
+            ItemStack.CODEC.fieldOf("table").forGetter(addItemModifier -> addItemModifier.stack)).apply(instance, AddItemModifier::new));
+
+    private final ItemStack stack;
 
     public AddItemModifier(LootItemCondition[] conditionsIn, ItemStack itemStack) {
         super(conditionsIn);
@@ -34,7 +33,7 @@ public class AddItemModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }
