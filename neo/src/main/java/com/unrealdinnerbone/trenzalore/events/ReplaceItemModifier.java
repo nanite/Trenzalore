@@ -37,12 +37,13 @@ public class ReplaceItemModifier extends LootModifier {
 
     @NotNull
     @Override
-    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         generatedLoot.replaceAll(itemStack -> ingredient.test(itemStack) ? stack.copyWithCount(itemStack.getCount()) : itemStack);
         return generatedLoot;
     }
 
     @Override
+    @NotNull
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }

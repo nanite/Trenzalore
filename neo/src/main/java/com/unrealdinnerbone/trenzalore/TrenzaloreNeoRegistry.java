@@ -39,4 +39,5 @@ public class TrenzaloreNeoRegistry implements IRegistry {
     public String getModID() {
         return Trenzalore.MOD_ID;
     }
+
 }

@@ -1,5 +1,0 @@
-multiLoader.forge() {
-    forgeVersion.set("${forge_version}")
-}
-
-publishing.publications.mavenJava.artifact jar
