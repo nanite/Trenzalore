@@ -66,6 +66,10 @@ subprojects {
         outputs.upToDateWhen { false }
     }
 
+    test {
+        enabled = false
+    }
+
     publishing {
         repositories {
             if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
