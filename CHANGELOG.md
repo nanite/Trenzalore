@@ -1,3 +1,3 @@
-### 6.0.0
+### 6.0.1
 
-- Update to 1.21
+- Update NeoForge

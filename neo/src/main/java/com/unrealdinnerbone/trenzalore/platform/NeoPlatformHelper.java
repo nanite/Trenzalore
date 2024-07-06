@@ -21,7 +21,6 @@ import java.util.function.Supplier;
 @ApiStatus.Internal
 public class NeoPlatformHelper implements IPlatformHelper {
 
-    private static IEventBus eventBus;
     private static final Map<ResourceKey<CreativeModeTab>, List<Supplier<? extends Item>>> CREATIVE_TAB_MAP = new HashMap<>();
 
     @Override
@@ -43,7 +42,11 @@ public class NeoPlatformHelper implements IPlatformHelper {
     public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
         DeferredRegister<T> deferredRegister = DeferredRegister.create(registryObjects.registryKey(), modId);
         registryObjects.objects().forEach(registryEntry -> deferredRegister.register(registryEntry.name(), registryEntry.entry()));
-        deferredRegister.register(eventBus);
+        IEventBus modEventBus = ModList.get().getModContainerById(modId).orElseThrow(() -> new IllegalArgumentException("Mod Not Found: " + modId)).getEventBus();
+        if(modEventBus == null) {
+            throw new IllegalArgumentException("Mod Does not have and event bus: " + modId);
+        }
+        deferredRegister.register(modEventBus);
     }
 
     @Override
@@ -60,8 +63,5 @@ public class NeoPlatformHelper implements IPlatformHelper {
         return CREATIVE_TAB_MAP;
     }
 
-    public static void setEventBus(IEventBus eventBus) {
-        NeoPlatformHelper.eventBus = eventBus;
-    }
 
 }

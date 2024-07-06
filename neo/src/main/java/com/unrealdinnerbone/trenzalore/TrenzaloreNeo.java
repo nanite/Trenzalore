@@ -9,7 +9,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 public class TrenzaloreNeo {
     
     public TrenzaloreNeo(IEventBus modEventBus) {
-        NeoPlatformHelper.setEventBus(modEventBus);
         Trenzalore.init();
         modEventBus.addListener(TrenzaloreNeo::onCreativeTab);
     }
