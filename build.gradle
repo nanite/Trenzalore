@@ -1,5 +1,5 @@
 plugins {
-    id("dev.nanite.mlp") version("0.2.0")
+    id("dev.nanite.mlp") version("0.3.0")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
@@ -15,83 +15,7 @@ multiLoader.root() {
     splitSources.set(true)
     convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
-
-    def get = filesToExpand.get()
-    def newList = new ArrayList<>(get)
-    newList.add("META-INF/neoforge.mods.toml")
-    filesToExpand.set(newList)
-}
-
-allprojects {
-    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-    version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
-    setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
-    group = "com.unrealdinnerbone"
-
-    idea {
-        module {
-            downloadSources = true
-            downloadJavadoc = true
-        }
-    }
-}
-
-subprojects {
-
-
-    apply plugin: 'java-library'
-    apply plugin: 'maven-publish'
-    apply plugin: 'dev.nanite.mlp'
-
-
-    sourceSets.main.resources.srcDir project.file('src/generated/resources')
-
-    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-
-    base {
-        archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
-    }
-    repositories {
-        maven {
-            name = "NeoForge"
-            url = "https://maven.neoforged.net/"
-        }
-        maven {
-            name = "Fabric"
-            url = "https://maven.fabricmc.net/"
-        }
-    }
-    tasks.withType(ProcessResources).configureEach {
-        outputs.upToDateWhen { false }
-    }
-
-    test {
-        enabled = false
-    }
-
-    publishing {
-        repositories {
-            if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
-                maven {
-                    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-                    url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
-                    credentials {
-                        username = "nanite"
-                        password = providers.environmentVariable("NANITE_TOKEN").get()
-                    }
-                }
-            }
-        }
-        publications {
-            register("mavenJava", MavenPublication) {
-                groupId project.group
-                artifactId project.getArchivesBaseName()
-            }
-        }
-    }
-
-
+    group.set(project.property("maven_group"))
 }
 
 

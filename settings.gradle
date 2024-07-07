@@ -1,6 +1,5 @@
 pluginManagement {
     repositories {
-        mavenLocal()
         gradlePluginPortal()
         maven {
             name = "NeoForge"
@@ -23,8 +22,6 @@ pluginManagement {
     }
 
 }
-
-
 
 
 include("common", "neo", "fabric")

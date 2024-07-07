@@ -1,6 +1,11 @@
+plugins {
+    id 'multiloader'
+}
+
 multiLoader.neo() {
     neoVersion.set("${neo_version}")
 }
 
 publishing.publications.mavenJava.from components.java
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
