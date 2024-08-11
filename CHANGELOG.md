@@ -1,3 +1,3 @@
-### 6.0.3
+### 6.1.0
 
-- Neo Updates
+- Update to 1.21.1
