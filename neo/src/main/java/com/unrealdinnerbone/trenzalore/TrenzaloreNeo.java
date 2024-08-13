@@ -4,6 +4,7 @@ import com.unrealdinnerbone.trenzalore.platform.NeoPlatformHelper;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
 @Mod(Trenzalore.MOD_ID)
 public class TrenzaloreNeo {

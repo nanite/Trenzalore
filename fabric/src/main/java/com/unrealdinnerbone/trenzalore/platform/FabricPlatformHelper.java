@@ -7,6 +7,7 @@ import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -55,7 +56,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
         Registry<T> registry = (Registry<T>) BuiltInRegistries.REGISTRY.get(registryKey.location());
         for (RegistryEntry<? extends T> object : registryObjects.objects()) {
             ResourceLocation id = RLUtils.rl(modId, object.name());
-            Registry.register(registry, id, object.get());
+            T register = Registry.register(registry, id, object.get());
+            object.setHolder(Holder.direct(register));
         }
     }
 
