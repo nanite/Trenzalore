@@ -10,6 +10,9 @@ import java.util.function.Supplier;
 
 public interface ICreativeTabRegister {
 
-    @ApiStatus.Internal
     void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item);
+
+    default void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {
+        addItemToCreativeTab(tabResourceKey, List.of(item));
+    }
 }

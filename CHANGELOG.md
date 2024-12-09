@@ -1,3 +1,3 @@
-### 21.4.0
+### 21.4.1
 
-- Update to Minecraft 1.21.4
+- Fix registration on fabirc
