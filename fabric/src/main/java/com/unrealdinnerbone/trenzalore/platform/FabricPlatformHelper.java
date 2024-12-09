@@ -1,5 +1,6 @@
 package com.unrealdinnerbone.trenzalore.platform;
 
+import com.mojang.logging.LogUtils;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
@@ -15,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class FabricPlatformHelper implements IPlatformHelper {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final Map<ResourceKey<CreativeModeTab>, Event<ItemGroupEvents.ModifyEntries>> creativeTabEvents = new HashMap<>();
 
@@ -53,12 +57,16 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
         ResourceKey<Registry<T>> registryKey = registryObjects.registryKey();
-        Registry<T> registry = (Registry<T>) BuiltInRegistries.REGISTRY.get(registryKey.location());
-        for (RegistryEntry<? extends T> object : registryObjects.objects()) {
-            ResourceLocation id = RLUtils.rl(modId, object.name());
-            T register = Registry.register(registry, id, object.get());
-            object.setHolder(Holder.direct(register));
-        }
+        BuiltInRegistries.REGISTRY.get(registryKey.location()).ifPresentOrElse(registry -> {
+            Registry<T> theRegistry = (Registry<T>) registry;
+            for (RegistryEntry<? extends T> object : registryObjects.objects()) {
+                ResourceLocation id = RLUtils.rl(modId, object.name());
+                T register = Registry.register(theRegistry, id, object.get());
+                object.setHolder(Holder.direct(register));
+            }
+        }, () -> LOGGER.error("Failed to find registry: {}", registryKey.location()));
+
     }
+
 
 }

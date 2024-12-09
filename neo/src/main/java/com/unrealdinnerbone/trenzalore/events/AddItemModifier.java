@@ -14,7 +14,6 @@ import javax.annotation.Nonnull;
 
 public class AddItemModifier extends LootModifier {
 
-
     public static final MapCodec<AddItemModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             IGlobalLootModifier.LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(glm -> glm.conditions),
             ItemStack.CODEC.fieldOf("table").forGetter(addItemModifier -> addItemModifier.stack)).apply(instance, AddItemModifier::new));

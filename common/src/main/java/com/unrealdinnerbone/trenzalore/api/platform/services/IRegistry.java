@@ -11,6 +11,6 @@ public interface IRegistry {
 
     String getModID();
 
-    default void afterRegistered() {}
+    default void afterRegistered(ICreativeTabRegister creativeTabRegister) {}
 
 }

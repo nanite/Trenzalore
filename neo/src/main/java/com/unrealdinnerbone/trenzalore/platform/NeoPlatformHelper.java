@@ -48,7 +48,9 @@ public class NeoPlatformHelper implements IPlatformHelper {
             Holder<T> register = deferredRegister.register(registryEntry.name(), registryEntry.entry());
             registryEntry.setHolder(register);
         });
-        IEventBus modEventBus = ModList.get().getModContainerById(modId).orElseThrow(() -> new IllegalArgumentException("Mod Not Found: " + modId)).getEventBus();
+        IEventBus modEventBus = ModList.get().getModContainerById(modId)
+                .orElseThrow(() -> new IllegalArgumentException("Mod Not Found: " + modId))
+                .getEventBus();
         if(modEventBus == null) {
             throw new IllegalArgumentException("Mod Does not have and event bus: " + modId);
         }

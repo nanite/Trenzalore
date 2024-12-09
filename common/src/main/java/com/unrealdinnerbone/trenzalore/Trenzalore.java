@@ -16,7 +16,7 @@ public class Trenzalore {
         ServiceLoader.load(IRegistry.class).forEach(iRegistry -> {
             List<RegistryObjects<?>> registryObjects = iRegistry.getRegistryObjects();
             registryObjects.forEach(registryObject -> Services.PLATFORM.registryRegistryObjects(iRegistry.getModID(), registryObject));
-            iRegistry.afterRegistered();
+            iRegistry.afterRegistered(Services.PLATFORM);
         });
     }
 

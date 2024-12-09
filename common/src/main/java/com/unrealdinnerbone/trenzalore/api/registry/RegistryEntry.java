@@ -1,16 +1,9 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
-import com.mojang.datafixers.util.Either;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderOwner;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
+import org.jetbrains.annotations.ApiStatus;
 
-import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 public class RegistryEntry<T> implements Supplier<T> {
 
@@ -23,7 +16,11 @@ public class RegistryEntry<T> implements Supplier<T> {
         this.entry = entry;
     }
 
+    @ApiStatus.Internal
     public <B> void setHolder(Holder<B> register) {
+        if(holder != null) {
+            throw new RuntimeException("Holder already set");
+        }
         this.holder = (Holder<T>) register;
     }
 

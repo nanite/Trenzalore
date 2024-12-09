@@ -10,16 +10,13 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Supplier;
 
-public interface IPlatformHelper {
+public interface IPlatformHelper extends ICreativeTabRegister {
 
     String getPlatform();
 
     Path getConfigPath();
 
     boolean isModLoaded(String modId);
-
-    @ApiStatus.Internal
-    void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item);
 
     @ApiStatus.Internal
     <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects);

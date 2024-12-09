@@ -19,7 +19,7 @@ public class ConfigManger {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Deprecated
-    @ApiStatus.ScheduledForRemoval(inVersion = "6.0.0")
+    @ApiStatus.ScheduledForRemoval(inVersion = "22.0.0")
     public static <T> T getOrCreateConfig(String name, Class<T> tClass, Supplier<T> defaultValue) {
         Path configPath = Services.PLATFORM.getConfigPath();
         Path config = configPath.resolve(name + ".json");

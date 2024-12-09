@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -33,8 +34,8 @@ public class Regeneration {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, item);
     }
 
-    public static <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> creator, Block... validBlocks) {
-        return BlockEntityType.Builder.of(creator::apply, validBlocks).build(null);
+    public static <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BlockEntityType.BlockEntitySupplier<T> creator, Block... validBlocks) {
+        return new BlockEntityType<>(creator, Set.of(validBlocks));
     }
 
     public static <T extends AbstractContainerMenu> MenuType<T> createMenuType(BiFunction<Integer, Inventory, T> supplier) {

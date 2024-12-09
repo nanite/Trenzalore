@@ -1,6 +1,5 @@
 package com.unrealdinnerbone.trenzalore.events;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -18,7 +17,7 @@ public class ReplaceItemModifier extends LootModifier {
     private final ItemStack stack;
     public static final MapCodec<ReplaceItemModifier> CODEC = RecordCodecBuilder.mapCodec(builder ->
             codecStart(builder)
-                    .and(Ingredient.CODEC_NONEMPTY.fieldOf("item")
+                    .and(Ingredient.CODEC.fieldOf("item")
                             .forGetter((modifier) -> modifier.ingredient))
                     .and(ItemStack.CODEC.fieldOf("stack")
                             .forGetter((modifier) -> modifier.stack))
