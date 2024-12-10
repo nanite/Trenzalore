@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TrenzaloreNeoRegistry implements IRegistry {
 
-    private static final RegistryObjects<MapCodec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = Regeneration.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
+    private static final RegistryObjects<MapCodec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = Regeneration.create(Trenzalore.MOD_ID, NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
 
     public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("replace", () -> ReplaceItemModifier.CODEC);
     public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>> ADD_ITEM_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("add", () -> AddItemModifier.CODEC);

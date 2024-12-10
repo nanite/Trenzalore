@@ -45,7 +45,7 @@ public class NeoPlatformHelper implements IPlatformHelper {
     public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
         DeferredRegister<T> deferredRegister = DeferredRegister.create(registryObjects.registryKey(), modId);
         registryObjects.objects().forEach(registryEntry -> {
-            Holder<T> register = deferredRegister.register(registryEntry.name(), registryEntry.entry());
+            Holder<T> register = deferredRegister.register(registryEntry.getKey().getPath(), registryEntry.entry());
             registryEntry.setHolder(register);
         });
         IEventBus modEventBus = ModList.get().getModContainerById(modId)

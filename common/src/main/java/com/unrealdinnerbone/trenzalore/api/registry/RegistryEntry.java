@@ -1,18 +1,20 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Supplier;
 
 public class RegistryEntry<T> implements Supplier<T> {
 
-    private final String name;
+    private final ResourceLocation key;
     private final Supplier<T> entry;
     private Holder<T> holder;
 
-    public RegistryEntry(String name, Supplier<T> entry) {
-        this.name = name;
+    public RegistryEntry(ResourceLocation key, Supplier<T> entry) {
+        this.key = key;
         this.entry = entry;
     }
 
@@ -33,8 +35,8 @@ public class RegistryEntry<T> implements Supplier<T> {
         return entry.get();
     }
 
-    public String name() {
-        return name;
+    public ResourceLocation getKey() {
+        return key;
     }
 
     public Supplier<T> entry() {

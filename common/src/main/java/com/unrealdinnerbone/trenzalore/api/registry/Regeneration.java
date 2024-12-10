@@ -22,8 +22,12 @@ import java.util.function.Supplier;
 
 public class Regeneration {
 
-    public static <T> RegistryObjects<T> create(ResourceKey<Registry<T>> registry) {
-        return RegistryObjects.of(registry);
+    public static <T> RegistryObjects<T> create(String modID, ResourceKey<Registry<T>> registry) {
+        return RegistryObjects.of(modID, registry);
+    }
+
+    public static ItemRegistryObjects createItemRegistry(String modID) {
+        return new ItemRegistryObjects(modID);
     }
 
     public static void addItemToCreateTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {

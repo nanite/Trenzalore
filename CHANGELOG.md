@@ -1,3 +1,3 @@
-### 21.4.1
+### 21.4.2
 
-- Fix registration on fabirc
+- Pass ResourceKey for creation of new items
