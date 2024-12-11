@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -38,12 +40,26 @@ public class Regeneration {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, item);
     }
 
+    @Deprecated(forRemoval = true)
+    @ApiStatus.ScheduledForRemoval(inVersion = "22.0.0")
     public static <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BlockEntityType.BlockEntitySupplier<T> creator, Block... validBlocks) {
+        return new BlockEntityType<>(creator, Set.of(validBlocks));
+    }
+
+    public static <T extends BlockEntity> BlockEntityType<T> createBEType(BESuppler<T> creator, Block... validBlocks) {
         return new BlockEntityType<>(creator, Set.of(validBlocks));
     }
 
     public static <T extends AbstractContainerMenu> MenuType<T> createMenuType(BiFunction<Integer, Inventory, T> supplier) {
         return new MenuType<>(supplier::apply, FeatureFlagSet.of());
+    }
+
+
+    public interface BESuppler<T extends BlockEntity> extends BlockEntityType.BlockEntitySupplier<T> {
+
+        @Override
+        @NotNull
+        T create(BlockPos blockPos, BlockState blockState);
     }
 
 }
