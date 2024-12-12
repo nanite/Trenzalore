@@ -32,10 +32,18 @@ public class Regeneration {
         return new ItemRegistryObjects(modID);
     }
 
+    public static BlockRegistryObjects createBlockRegistry(String modID) {
+        return new BlockRegistryObjects(modID);
+    }
+
+    @Deprecated(forRemoval = true)
+    @ApiStatus.ScheduledForRemoval(inVersion = "22.0.0")
     public static void addItemToCreateTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, List.of(item));
     }
 
+    @Deprecated(forRemoval = true)
+    @ApiStatus.ScheduledForRemoval(inVersion = "22.0.0")
     public static void addItemsToCreateTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> item) {
         Services.PLATFORM.addItemToCreativeTab(tabResourceKey, item);
     }

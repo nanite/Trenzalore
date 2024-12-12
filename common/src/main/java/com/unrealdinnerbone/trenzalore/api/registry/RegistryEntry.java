@@ -1,7 +1,6 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -27,19 +26,30 @@ public class RegistryEntry<T> implements Supplier<T> {
     }
 
     public Holder<T> getHolder() {
+        if (holder == null) {
+            throw new IllegalStateException("Can't get holder before it is set");
+        }
         return holder;
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval(inVersion = "21.0.0")
     @Override
     public T get() {
-        return entry.get();
+        return getHolder().value();
     }
 
     public ResourceLocation getKey() {
         return key;
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval(inVersion = "21.0.0")
     public Supplier<T> entry() {
+        return entry;
+    }
+
+    public Supplier<T> creator() {
         return entry;
     }
 }

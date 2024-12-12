@@ -1,5 +1,6 @@
 package com.unrealdinnerbone.trenzalore.api.platform.services;
 
+import com.unrealdinnerbone.trenzalore.lib.CreativeTabs;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -14,5 +15,9 @@ public interface ICreativeTabRegister {
 
     default void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, Supplier<? extends Item> item) {
         addItemToCreativeTab(tabResourceKey, List.of(item));
+    }
+
+    default CreativeTabs tabs() {
+        return CreativeTabs.INSTANCE;
     }
 }

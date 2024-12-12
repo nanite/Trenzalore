@@ -1,3 +1,3 @@
-### 21.4.3
+### 21.4.4
 
-- Expose Block Entity creation for common api
+- Add Block Registration Helper and other tabs
