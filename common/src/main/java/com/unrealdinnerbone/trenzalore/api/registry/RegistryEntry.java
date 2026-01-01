@@ -1,18 +1,21 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
 public class RegistryEntry<T> implements Supplier<T> {
 
-    private final ResourceLocation key;
+    private final Identifier key;
     private final Supplier<T> entry;
+
+    @Nullable
     private Holder<T> holder;
 
-    public RegistryEntry(ResourceLocation key, Supplier<T> entry) {
+    public RegistryEntry(Identifier key, Supplier<T> entry) {
         this.key = key;
         this.entry = entry;
     }
@@ -27,7 +30,7 @@ public class RegistryEntry<T> implements Supplier<T> {
 
     public Holder<T> getHolder() {
         if (holder == null) {
-            throw new IllegalStateException("Can't get holder before it is set");
+            throw new IllegalStateException("Holder for " + key + " has not been set yet!");
         }
         return holder;
     }
@@ -39,7 +42,7 @@ public class RegistryEntry<T> implements Supplier<T> {
         return getHolder().value();
     }
 
-    public ResourceLocation getKey() {
+    public Identifier getKey() {
         return key;
     }
 

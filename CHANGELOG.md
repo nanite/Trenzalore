@@ -1,3 +1,3 @@
-### 21.4.4
+### 21.11.0
 
-- Add Block Registration Helper and other tabs
+- Update to 1.21.11

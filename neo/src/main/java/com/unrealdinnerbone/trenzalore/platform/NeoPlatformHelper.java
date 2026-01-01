@@ -1,7 +1,6 @@
 package com.unrealdinnerbone.trenzalore.platform;
 
 import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
-import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -10,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.ApiStatus;
 

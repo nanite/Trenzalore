@@ -3,8 +3,8 @@ package com.unrealdinnerbone.trenzalore;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IRegistry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
-import com.unrealdinnerbone.trenzalore.lib.RLUtils;
-import net.minecraft.resources.ResourceLocation;
+import com.unrealdinnerbone.trenzalore.lib.IDUtils;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -20,8 +20,8 @@ public class Trenzalore {
         });
     }
 
-    public static ResourceLocation rl(String value) {
-        return RLUtils.rl(MOD_ID, value);
+    public static Identifier id(String value) {
+        return IDUtils.id(MOD_ID, value);
     }
 
 }

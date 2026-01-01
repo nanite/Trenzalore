@@ -1,9 +1,11 @@
 package com.unrealdinnerbone.trenzalore.api.platform;
 
 import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ServiceLoader;
 
+@NullMarked
 public class Services {
 
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);

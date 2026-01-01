@@ -9,7 +9,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
-import org.jetbrains.annotations.NotNull;
 
 public class ReplaceItemModifier extends LootModifier {
 
@@ -34,15 +33,13 @@ public class ReplaceItemModifier extends LootModifier {
         return new ReplaceItemModifier(conditions, ingredient, itemStack);
     }
 
-    @NotNull
     @Override
-    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         generatedLoot.replaceAll(itemStack -> ingredient.test(itemStack) ? stack.copyWithCount(itemStack.getCount()) : itemStack);
         return generatedLoot;
     }
 
     @Override
-    @NotNull
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
