@@ -8,7 +8,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 def isASnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
 version = "${mod_version}+mc${minecraft_version}${isASnapshot ? '-SNAPSHOT' : ''}"
-//setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
 group = "${maven_group}"
 
 idea {
@@ -57,7 +56,7 @@ publishing {
     publications {
         register("mavenJava", MavenPublication) {
             groupId project.group
-//            artifactId project.getArchivesBaseName()
+            setArtifactId("${mod_name}-${project.name}".toLowerCase())
         }
     }
 }
