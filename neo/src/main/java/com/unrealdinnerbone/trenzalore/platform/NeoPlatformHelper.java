@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.trenzalore.platform;
 
 import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
+import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -40,10 +41,10 @@ public class NeoPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
+    public <T> void registryRegistryObjects(String modId, AbstractRegistryObjects<T> registryObjects) {
         DeferredRegister<T> deferredRegister = DeferredRegister.create(registryObjects.registryKey(), modId);
         registryObjects.objects().forEach(registryEntry -> {
-            Holder<T> register = deferredRegister.register(registryEntry.getKey().getPath(), registryEntry.entry());
+            Holder<T> register = deferredRegister.register(registryEntry.getIDKey().getPath(), registryEntry);
             registryEntry.setHolder(register);
         });
         IEventBus modEventBus = ModList.get().getModContainerById(modId)

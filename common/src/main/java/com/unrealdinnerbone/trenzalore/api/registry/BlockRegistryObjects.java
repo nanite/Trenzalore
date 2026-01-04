@@ -11,17 +11,17 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public class BlockRegistryObjects extends RegistryObjects<Block> {
+public class BlockRegistryObjects extends AbstractRegistryObjects<Block> {
 
     public BlockRegistryObjects(String modID) {
         super(modID, Registries.BLOCK);
     }
 
-    public <A extends Block> RegistryEntry<A> register(String name, Function<Block.Properties, A> object, UnaryOperator<Block.Properties> blockProperties) {
+    public <A extends Block> RegistryEntry.BlockEntry<A> register(String name, Function<Block.Properties, A> object, UnaryOperator<Block.Properties> blockProperties) {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<Block> key = ResourceKey.create(registryKey, rl);
         Supplier<A> memoize = Suppliers.memoize(() -> object.apply(blockProperties.apply(Block.Properties.of().setId(key))));
-        RegistryEntry<A> entry = new RegistryEntry<>(rl, memoize);
+        RegistryEntry.BlockEntry<A> entry = new RegistryEntry.BlockEntry<>(rl, memoize);
         objects.add(entry);
         return entry;
     }

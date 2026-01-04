@@ -1,5 +1,6 @@
 package com.unrealdinnerbone.trenzalore.api.platform.services;
 
+import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,6 +20,6 @@ public interface IPlatformHelper extends ICreativeTabRegister {
     boolean isModLoaded(String modId);
 
     @ApiStatus.Internal
-    <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects);
+    <T> void registryRegistryObjects(String modId, AbstractRegistryObjects<T> registryObjects);
 
 }

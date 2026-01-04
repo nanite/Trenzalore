@@ -13,22 +13,26 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public class ItemRegistryObjects extends RegistryObjects<Item> {
+public class ItemRegistryObjects extends AbstractRegistryObjects<Item> {
 
     public ItemRegistryObjects(String modID) {
         super(modID, Registries.ITEM);
     }
 
-    public <A extends Item> RegistryEntry<A> register(String name, Function<Item.Properties, A> object, UnaryOperator<Item.Properties> itemProperties) {
+    public <A extends Item> RegistryEntry.ItemEntry<A> register(String name, Function<Item.Properties, A> object, UnaryOperator<Item.Properties> itemProperties) {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<Item> key = ResourceKey.create(registryKey, rl);
         Supplier<A> memoize = Suppliers.memoize(() -> object.apply(itemProperties.apply(new Item.Properties().setId(key))));
-        RegistryEntry<A> entry = new RegistryEntry<>(rl, memoize);
+        RegistryEntry.ItemEntry<A> entry = new RegistryEntry.ItemEntry<>(rl, memoize);
         objects.add(entry);
         return entry;
     }
 
-    public RegistryEntry<BlockItem> registerBlockItem(String name, Supplier<Block> block, UnaryOperator<Item.Properties> itemProperties) {
+    public RegistryEntry.ItemEntry<BlockItem> registerBlockItem(String name, Supplier<Block> block, UnaryOperator<Item.Properties> itemProperties) {
+        return register(name, (properties) -> new BlockItem(block.get(), properties), itemProperties);
+    }
+
+    public RegistryEntry.ItemEntry<BlockItem> registerBlockItem(String name, RegistryEntry<Block, ? extends Block> block, UnaryOperator<Item.Properties> itemProperties) {
         return register(name, (properties) -> new BlockItem(block.get(), properties), itemProperties);
     }
 

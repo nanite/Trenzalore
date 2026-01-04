@@ -2,16 +2,14 @@ package com.unrealdinnerbone.trenzalore.platform;
 
 import com.mojang.logging.LogUtils;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
+import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
-import com.unrealdinnerbone.trenzalore.lib.IDUtils;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -55,12 +53,12 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T> void registryRegistryObjects(String modId, RegistryObjects<T> registryObjects) {
+    public <T> void registryRegistryObjects(String modId, AbstractRegistryObjects<T> registryObjects) {
         ResourceKey<Registry<T>> registryKey = registryObjects.registryKey();
         BuiltInRegistries.REGISTRY.get(registryKey.identifier()).ifPresentOrElse(registry -> {
             Registry<T> theRegistry = (Registry<T>) registry.value();
-            for (RegistryEntry<? extends T> object : registryObjects.objects()) {
-                object.setHolder(Registry.registerForHolder(theRegistry, object.getKey(), object.creator().get()));
+            for (RegistryEntry<T, ? extends T> object : registryObjects.objects()) {
+                object.setHolder(Registry.registerForHolder(theRegistry, object.getIDKey(), object.entryValue()));
             }
         }, () -> LOGGER.error("Failed to find registry: {}", registryKey.identifier()));
 

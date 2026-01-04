@@ -7,27 +7,28 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class RegistryEntry<T> implements Supplier<T> {
+public class RegistryEntry<T, V extends T> implements Supplier<T>, ReferencedHolder<T> {
 
     private final Identifier key;
-    private final Supplier<T> entry;
+    private final Supplier<V> entry;
 
     @Nullable
     private Holder<T> holder;
 
-    public RegistryEntry(Identifier key, Supplier<T> entry) {
+    public RegistryEntry(Identifier key, Supplier<V> entry) {
         this.key = key;
         this.entry = entry;
     }
 
     @ApiStatus.Internal
-    public <B> void setHolder(Holder<B> register) {
+    public void setHolder(Holder<T> register) {
         if(holder != null) {
             throw new RuntimeException("Holder already set");
         }
-        this.holder = (Holder<T>) register;
+        this.holder = register;
     }
 
+    @Override
     public Holder<T> getHolder() {
         if (holder == null) {
             throw new IllegalStateException("Holder for " + key + " has not been set yet!");
@@ -35,24 +36,32 @@ public class RegistryEntry<T> implements Supplier<T> {
         return holder;
     }
 
-    @Deprecated
-    @ApiStatus.ScheduledForRemoval(inVersion = "21.0.0")
     @Override
     public T get() {
         return getHolder().value();
     }
 
-    public Identifier getKey() {
+    public V entryValue() {
+        return entry.get();
+    }
+
+    public Identifier getIDKey() {
         return key;
     }
 
-    @Deprecated
-    @ApiStatus.ScheduledForRemoval(inVersion = "21.0.0")
-    public Supplier<T> entry() {
-        return entry;
+
+    public static class BlockEntry<T extends net.minecraft.world.level.block.Block> extends RegistryEntry<net.minecraft.world.level.block.Block, T> {
+        public BlockEntry(Identifier key, Supplier<T> entry) {
+            super(key, entry);
+        }
     }
 
-    public Supplier<T> creator() {
-        return entry;
+    public static class ItemEntry<T extends net.minecraft.world.item.Item> extends RegistryEntry<net.minecraft.world.item.Item, T> {
+        public ItemEntry(Identifier key, Supplier<T> entry) {
+            super(key, entry);
+        }
     }
+
+
+
 }

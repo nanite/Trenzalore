@@ -1,12 +1,12 @@
 package com.unrealdinnerbone.trenzalore.api.platform.services;
 
-import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
+import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 
 import java.util.List;
 
 public interface IRegistry {
 
-    List<RegistryObjects<?>> getRegistryObjects();
+    List<AbstractRegistryObjects<?>> getRegistryObjects();
 
     String getModID();
 
