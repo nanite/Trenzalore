@@ -1,3 +1,3 @@
-### 21.11.1
+### 21.11.2
 
-- Update to 1.21.11
+- Fix NeoForge Regeneration issue 
