@@ -1,5 +1,5 @@
 plugins {
-    id("dev.nanite.mlp") version("0.5.2")
+    id("dev.nanite.mlp") version("0.6.1")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.8.1"
@@ -7,7 +7,7 @@ plugins {
 }
 
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
@@ -24,6 +24,7 @@ publishMods {
     changelog = file("./CHANGELOG.md").text
     version = "${mod_version}"
     type = STABLE
+
 
     def fabricOptions = publishOptions {
         file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
@@ -43,6 +44,8 @@ publishMods {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
         projectId = "${curse_id}"
         minecraftVersions.add("${minecraft_version}")
+        clientRequired = true
+        serverRequired = true
     }
 
     curseforge("curseforgeFabric") {

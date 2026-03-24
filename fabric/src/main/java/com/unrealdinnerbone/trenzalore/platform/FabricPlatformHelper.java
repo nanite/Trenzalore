@@ -5,8 +5,8 @@ import com.unrealdinnerbone.trenzalore.api.platform.services.IPlatformHelper;
 import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,7 +26,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final Map<ResourceKey<CreativeModeTab>, Event<ItemGroupEvents.ModifyEntries>> creativeTabEvents = new HashMap<>();
+    private static final Map<ResourceKey<CreativeModeTab>, Event<CreativeModeTabEvents.ModifyOutput>> creativeTabEvents = new HashMap<>();
 
     @Override
     public String getPlatform() {
@@ -47,7 +47,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @ApiStatus.Internal
     public void addItemToCreativeTab(ResourceKey<CreativeModeTab> tabResourceKey, List<Supplier<? extends Item>> items) {
         if(!creativeTabEvents.containsKey(tabResourceKey)) {
-            creativeTabEvents.put(tabResourceKey, ItemGroupEvents.modifyEntriesEvent(tabResourceKey));
+            creativeTabEvents.put(tabResourceKey, CreativeModeTabEvents.modifyOutputEvent(tabResourceKey));
         }
         creativeTabEvents.get(tabResourceKey).register(entries -> items.forEach(itemSupplier -> entries.accept(itemSupplier.get())));
     }

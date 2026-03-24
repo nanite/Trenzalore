@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +48,16 @@ public class RegistryEntry<T, V extends T> implements Supplier<T>, ReferencedHol
 
     public Identifier getIDKey() {
         return key;
+    }
+
+    @Override
+    public boolean areComponentsBound() {
+        return getHolder().areComponentsBound();
+    }
+
+    @Override
+    public DataComponentMap components() {
+        return getHolder().components();
     }
 
 
