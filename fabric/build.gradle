@@ -8,7 +8,3 @@ multiLoader.fabric() {
 }
 
 publishing.publications.mavenJava.from components.java
-
-//remapJar {
-//    setArchivesBaseName("${project.property("mod_name")}-${project.name}".toLowerCase())
-//}
