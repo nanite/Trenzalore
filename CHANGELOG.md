@@ -1,3 +1,3 @@
-### 21.11.2
+### 26.1.1.0
 
-- Fix NeoForge Regeneration issue 
+- Update to 26.1.1

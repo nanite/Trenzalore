@@ -9,15 +9,3 @@ logoFile="assets/trenzalore/logo.png"
 credits="Mikey for the help!"
 authors="UnRealDinnerbone"
 description="This mod adds a few small helpers to provide compatibility with Forge / Fabric."
-[[dependencies.trenzalore]]
-    modId="neoforge"
-    required=true
-    versionRange="[1.0,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.trenzalore]]
-    modId="minecraft"
-    required=true
-    versionRange="[${minecraft_version}]"
-    ordering="NONE"
-    side="BOTH"
