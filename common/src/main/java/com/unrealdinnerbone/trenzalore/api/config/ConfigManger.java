@@ -65,6 +65,12 @@ public class ConfigManger {
         }
     }
 
+    public static <T> void setConfig(String name, T config, Codec<T> codec) {
+        Path configPath = Services.PLATFORM.getConfigPath();
+        Path configFile = configPath.resolve(name + ".json");
+        save(codec, config, configFile);
+    }
+
     private static <T> void save(Codec<T> codec, T config, Path path) {
         try {
             DataResult<JsonElement> result = codec.encodeStart(JsonOps.INSTANCE, config);

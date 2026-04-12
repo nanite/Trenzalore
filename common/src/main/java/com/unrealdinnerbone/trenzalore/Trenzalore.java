@@ -3,7 +3,6 @@ package com.unrealdinnerbone.trenzalore;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IRegistry;
 import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
-import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
 import com.unrealdinnerbone.trenzalore.lib.IDUtils;
 import net.minecraft.resources.Identifier;
 
