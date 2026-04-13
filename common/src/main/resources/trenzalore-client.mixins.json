@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.unrealdinnerbone.trenzalore.client.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ClientLevelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+  

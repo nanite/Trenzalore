@@ -15,4 +15,8 @@ public class Services {
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
     }
+
+    public static <T> Iterable<T> loadAll(Class<T> clazz) {
+        return ServiceLoader.load(clazz);
+    }
 }

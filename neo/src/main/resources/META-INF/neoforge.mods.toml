@@ -9,3 +9,6 @@ logoFile="assets/trenzalore/logo.png"
 credits="Mikey for the help!"
 authors="UnRealDinnerbone"
 description="This mod adds a few small helpers to provide compatibility with Forge / Fabric."
+
+[[mixins]]
+config = "trenzalore-client.mixins.json"

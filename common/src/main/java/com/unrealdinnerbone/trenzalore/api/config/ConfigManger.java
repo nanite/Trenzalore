@@ -53,7 +53,7 @@ public class ConfigManger {
         } else {
             try {
                 String jsonString = Files.readString(config);
-                JsonElement parse = new JsonParser().parse(jsonString);
+                JsonElement parse = JsonParser.parseString(jsonString);
                 DataResult<T> data = codec.parse(JsonOps.INSTANCE, parse);
                 T orThrow = data.getOrThrow();
                 save(codec, orThrow, config);
