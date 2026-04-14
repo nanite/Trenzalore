@@ -1,3 +1,4 @@
-### 26.1.1.1
+### 26.1.1.2
 
-- Update to 26.1.2
+- Attachment API
+- Event for Client Env Attributes

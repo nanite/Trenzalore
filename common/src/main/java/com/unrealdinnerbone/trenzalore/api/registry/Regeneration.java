@@ -1,7 +1,11 @@
 package com.unrealdinnerbone.trenzalore.api.registry;
 
+import com.unrealdinnerbone.trenzalore.api.attachment.AttachmentBuilder;
+import com.unrealdinnerbone.trenzalore.api.attachment.AttachmentReference;
+import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -15,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class Regeneration {
 
@@ -38,11 +43,14 @@ public class Regeneration {
         return new MenuType<>(supplier::apply, FeatureFlagSet.of());
     }
 
+    public static <T> AttachmentReference<T> attachment(Identifier identifier, Consumer<AttachmentBuilder<T>> consumerr) {
+        return Services.PLATFORM.registerAttachment(identifier, consumerr);
+    }
+
 
     public interface BESuppler<T extends BlockEntity> extends BlockEntityType.BlockEntitySupplier<T> {
 
         @Override
-        @NotNull
         T create(BlockPos blockPos, BlockState blockState);
     }
 

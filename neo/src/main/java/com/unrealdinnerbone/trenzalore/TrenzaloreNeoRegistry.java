@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.trenzalore;
 
 import com.mojang.serialization.MapCodec;
+import com.unrealdinnerbone.trenzalore.api.attachment.AttachmentReference;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IRegistry;
 import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.Regeneration;
@@ -19,6 +20,7 @@ public class TrenzaloreNeoRegistry implements IRegistry {
 
     public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>, MapCodec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("replace", () -> ReplaceItemModifier.CODEC);
     public static final RegistryEntry<MapCodec<? extends IGlobalLootModifier>, MapCodec<? extends IGlobalLootModifier>> ADD_ITEM_MODIFIER  = GLOBAL_LOOT_MODIFIERS.register("add", () -> AddItemModifier.CODEC);
+
 
     @Override
     public List<AbstractRegistryObjects<?>> getRegistryObjects() {
