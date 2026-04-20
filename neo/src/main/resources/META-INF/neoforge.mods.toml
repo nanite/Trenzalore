@@ -12,3 +12,10 @@ description="This mod adds a few small helpers to provide compatibility with For
 
 [[mixins]]
 config = "trenzalore-client.mixins.json"
+
+[[dependencies.trenzalore]]
+modId="neoforge"
+required=true
+versionRange="[26.1.2.20-beta,)"
+ordering="NONE"
+side="BOTH"

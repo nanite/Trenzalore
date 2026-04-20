@@ -1,3 +1,3 @@
-### 26.1.1.3
+### 26.1.2.0
 
-- Fix Crash
+- Update to new NeoForge
