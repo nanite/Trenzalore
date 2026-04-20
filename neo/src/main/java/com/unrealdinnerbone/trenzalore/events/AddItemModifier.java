@@ -27,7 +27,7 @@ public class AddItemModifier extends LootModifier {
 
     @Deprecated(forRemoval = true)
     public AddItemModifier(LootItemCondition[] conditionsIn, ItemStack itemStack) {
-        this(conditionsIn, itemStack, 1);
+        this(conditionsIn, itemStack, IGlobalLootModifier.DEFAULT_PRIORITY);
     }
 
     @Override

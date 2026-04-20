@@ -31,7 +31,7 @@ public class ReplaceItemModifier extends LootModifier {
 
     @Deprecated(forRemoval = true)
     public ReplaceItemModifier(LootItemCondition[] conditions, Ingredient ingredient, ItemStack itemStack) {
-        this(conditions, ingredient, itemStack, 1);
+        this(conditions, ingredient, itemStack, IGlobalLootModifier.DEFAULT_PRIORITY);
     }
 
     public ReplaceItemModifier of(Ingredient ingredient, ItemStack itemStack, LootItemCondition... conditions) {
