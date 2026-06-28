@@ -21,7 +21,7 @@ public class BlockRegistryObjects extends AbstractRegistryObjects<Block> {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<Block> key = ResourceKey.create(registryKey, rl);
         Supplier<A> memoize = Suppliers.memoize(() -> object.apply(blockProperties.apply(Block.Properties.of().setId(key))));
-        RegistryEntry.BlockEntry<A> entry = new RegistryEntry.BlockEntry<>(rl, memoize);
+        RegistryEntry.BlockEntry<A> entry = new RegistryEntry.BlockEntry<>(key, memoize);
         objects.add(entry);
         return entry;
     }

@@ -7,6 +7,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;

@@ -7,5 +7,5 @@ multiLoader.common()
 publishing.publications.mavenJava.from components.java
 
 dependencies {
-    clientCompileOnly("io.github.llamalad7:mixinextras-common:0.5.3")
+    clientCompileOnly("io.github.llamalad7:mixinextras-common:0.5.4")
 }

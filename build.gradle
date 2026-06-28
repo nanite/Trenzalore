@@ -2,7 +2,7 @@ plugins {
     id("dev.nanite.mlp") version("0.6.1")
     id("java-library")
     id("maven-publish")
-    id("me.modmuss50.mod-publish-plugin") version "0.8.1"
+    id("me.modmuss50.mod-publish-plugin") version "2.1.0"
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.0'
 }
 
@@ -44,8 +44,8 @@ publishMods {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
         projectId = "${curse_id}"
         minecraftVersions.add("${minecraft_version}")
-        clientRequired = true
-        serverRequired = true
+        client = true
+        server = true
     }
 
     curseforge("curseforgeFabric") {

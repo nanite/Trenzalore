@@ -23,7 +23,7 @@ public class ItemRegistryObjects extends AbstractRegistryObjects<Item> {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<Item> key = ResourceKey.create(registryKey, rl);
         Supplier<A> memoize = Suppliers.memoize(() -> object.apply(itemProperties.apply(new Item.Properties().setId(key))));
-        RegistryEntry.ItemEntry<A> entry = new RegistryEntry.ItemEntry<>(rl, memoize);
+        RegistryEntry.ItemEntry<A> entry = new RegistryEntry.ItemEntry<>(key, memoize);
         objects.add(entry);
         return entry;
     }
@@ -32,8 +32,8 @@ public class ItemRegistryObjects extends AbstractRegistryObjects<Item> {
         return register(name, (properties) -> new BlockItem(block.get(), properties), itemProperties);
     }
 
-    public RegistryEntry.ItemEntry<BlockItem> registerBlockItem(String name, RegistryEntry<Block, ? extends Block> block, UnaryOperator<Item.Properties> itemProperties) {
-        return register(name, (properties) -> new BlockItem(block.get(), properties), itemProperties);
+    public RegistryEntry.ItemEntry<BlockItem> registerBlockItem(String name, RegistryEntry<Block> block, UnaryOperator<Item.Properties> itemProperties) {
+        return register(name, (properties) -> new BlockItem(block.getEntry().get(), properties), itemProperties);
     }
 
 

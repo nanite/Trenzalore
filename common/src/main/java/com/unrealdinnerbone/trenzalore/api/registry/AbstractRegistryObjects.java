@@ -10,7 +10,7 @@ public abstract class AbstractRegistryObjects<T> {
 
     protected final String modID;
     protected final ResourceKey<Registry<T>> registryKey;
-    protected final List<RegistryEntry<T, ? extends T>> objects;
+    protected final List<RegistryEntry<T>> objects;
 
     public AbstractRegistryObjects(String modID, ResourceKey<Registry<T>> registryKey) {
         this.modID = modID;
@@ -22,7 +22,7 @@ public abstract class AbstractRegistryObjects<T> {
         return registryKey;
     }
 
-    public List<RegistryEntry<T, ? extends T>> objects() {
+    public List<RegistryEntry<T>> objects() {
         return objects;
     }
 }

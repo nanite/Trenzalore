@@ -53,8 +53,8 @@ public class NeoPlatformHelper implements IPlatformHelper {
     @Override
     public <T> void registryRegistryObjects(String modId, AbstractRegistryObjects<T> registryObjects) {
         DeferredRegister<T> deferredRegister = DeferredRegister.create(registryObjects.registryKey(), modId);
-        registryObjects.objects().forEach(registryEntry -> registryEntry
-                .setHolder(deferredRegister.register(registryEntry.getIDKey().getPath(), registryEntry::entryValue)));
+        registryObjects.objects().forEach(registryEntry ->
+                deferredRegister.register(registryEntry.key().identifier().getPath(), registryEntry.getEntry()));
         IEventBus modEventBus = ModList.get().getModContainerById(modId)
                 .orElseThrow(() -> new IllegalArgumentException("Mod Not Found: " + modId))
                 .getEventBus();
