@@ -64,8 +64,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
         ResourceKey<Registry<T>> registryKey = registryObjects.registryKey();
         BuiltInRegistries.REGISTRY.get(registryKey.identifier()).ifPresentOrElse(registry -> {
             Registry<T> theRegistry = (Registry<T>) registry.value();
-            for (RegistryEntry<T, ? extends T> object : registryObjects.objects()) {
-                object.setHolder(Registry.registerForHolder(theRegistry, object.getIDKey(), object.entryValue()));
+            for (RegistryEntry<T> object : registryObjects.objects()) {
+                Registry.register(theRegistry, object.key(), object.getEntry().get());
             }
         }, () -> LOGGER.error("Failed to find registry: {}", registryKey.identifier()));
     }
