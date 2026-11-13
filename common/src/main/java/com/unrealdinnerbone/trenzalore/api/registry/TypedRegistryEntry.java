@@ -9,4 +9,9 @@ public class TypedRegistryEntry<T, O extends T> extends RegistryEntry<T> {
     public TypedRegistryEntry(ResourceKey<T> key, Supplier<O> entry) {
         super(key, entry);
     }
+
+    @Override
+    public Supplier<O> getEntry() {
+        return (Supplier<O>) super.getEntry();
+    }
 }
