@@ -19,19 +19,19 @@ public class RegistryObjects<T> extends AbstractRegistryObjects<T> {
         return new RegistryObjects<>(modID, registryKey);
     }
 
-    public RegistryEntry<T> register(String name, Supplier<T> object) {
+    public <O extends T> TypedRegistryEntry<T, O> register(String name, Supplier<O> object) {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<T> key = ResourceKey.create(registryKey, rl);
-        RegistryEntry<T> entry = new RegistryEntry<>(key, Suppliers.memoize(object::get));
+        TypedRegistryEntry<T, O> entry = new TypedRegistryEntry<>(key, Suppliers.memoize(object::get));
         objects.add(entry);
         return entry;
     }
 
-    public RegistryEntry<T> registerWithId(String name, Function<ResourceKey<T>, T> object) {
+    public <O extends T> TypedRegistryEntry<T, O> registerWithId(String name, Function<ResourceKey<T>, O> object) {
         Identifier rl = IDUtils.id(modID, name);
         ResourceKey<T> key = ResourceKey.create(registryKey, rl);
-        Supplier<T> memoize = Suppliers.memoize(() -> object.apply(key));
-        RegistryEntry<T> entry = new RegistryEntry<>(key, memoize);
+        Supplier<O> memoize = Suppliers.memoize(() -> object.apply(key));
+        TypedRegistryEntry<T, O> entry = new TypedRegistryEntry<>(key, memoize);
         objects.add(entry);
         return entry;
     }
