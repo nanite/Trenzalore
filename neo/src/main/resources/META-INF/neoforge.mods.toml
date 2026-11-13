@@ -5,7 +5,6 @@ license="All Rights Reserved unless stated otherwise. Distribution permission is
 modId="trenzalore"
 version="${mod_version}"
 displayName="Trenzalore"
-logoFile="assets/trenzalore/logo.png"
 credits="Mikey for the help!"
 authors="UnRealDinnerbone"
 description="This mod adds a few small helpers to provide compatibility with Forge / Fabric."
